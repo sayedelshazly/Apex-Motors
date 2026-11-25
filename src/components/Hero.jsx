@@ -81,12 +81,12 @@ export default function Hero({ started }) {
 
         <h1 className="font-display leading-[0.82]" dir="ltr">
           <span className="block overflow-hidden">
-            <motion.span custom={0} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="block text-[13vw] tracking-tight text-bone md:text-[10.8rem]">
+            <motion.span custom={0} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="block text-[13vw] tracking-tight text-bone md:text-[min(10.8rem,19vw)]">
               ELSHAZLY
             </motion.span>
           </span>
           <span className="block overflow-hidden">
-            <motion.span custom={1} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="text-stroke block text-[13vw] tracking-tight md:text-[10.8rem]">
+            <motion.span custom={1} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="text-stroke block text-[13vw] tracking-tight md:text-[min(10.8rem,19vw)]">
               MOTORS
             </motion.span>
           </span>

@@ -20,6 +20,7 @@ const angleFor = (v) => -120 + (Math.min(MAX, Math.max(0, v)) / MAX) * 240;
 
 export default function ScrollSpeedo() {
   const [kmh, setKmh] = useState(0);
+  const [show, setShow] = useState(false);
   const state = useRef({ last: 0, vel: 0 });
 
   useEffect(() => {
@@ -35,6 +36,8 @@ export default function ScrollSpeedo() {
       s.vel += (inst - s.vel) * 0.075;
       const next = Math.min(MAX, Math.round(s.vel * 130));
       setKmh((prev) => (prev === next ? prev : next));
+      const vis = y > 60 && document.documentElement.scrollHeight - (y + window.innerHeight) > 180;
+      setShow((prev) => (prev === vis ? prev : vis));
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -47,7 +50,7 @@ export default function ScrollSpeedo() {
   return (
     <div
       dir="ltr"
-      className="fixed bottom-4 left-4 z-[120] w-[116px] origin-bottom-left [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.7))] max-sm:scale-[0.6]"
+      className={`fixed bottom-4 left-4 z-[120] w-[116px] origin-bottom-left transition-all duration-500 [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.7))] max-sm:scale-[0.6] ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-5 opacity-0"}`}
       aria-hidden
     >
       <svg viewBox="0 0 160 100" className="w-full">
