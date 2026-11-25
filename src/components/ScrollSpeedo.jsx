@@ -46,12 +46,12 @@ export default function ScrollSpeedo() {
   return (
     <div
       dir="ltr"
-      className="fixed bottom-4 left-4 z-[120] w-[148px] origin-bottom-left rounded-2xl border border-white/15 bg-void/85 px-3 pb-2.5 pt-2 shadow-[0_10px_36px_rgba(0,0,0,0.55)] backdrop-blur-md max-sm:scale-[0.82]"
+      className="fixed bottom-4 left-4 z-[120] w-[116px] origin-bottom-left [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.7))] max-sm:scale-[0.85]"
       aria-hidden
     >
       <svg viewBox="0 0 160 100" className="w-full">
         {/* track */}
-        <path d={arc(80, 76, 60, -120, 120)} fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="9" strokeLinecap="round" />
+        <path d={arc(80, 76, 60, -120, 120)} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="9" strokeLinecap="round" />
         {/* red zone */}
         <path d={arc(80, 76, 60, angleFor(REDLINE), 120)} fill="none" stroke="rgba(255,75,31,0.45)" strokeWidth="9" />
         {/* active arc */}
@@ -96,7 +96,7 @@ export default function ScrollSpeedo() {
         <circle cx="80" cy="76" r="6.5" fill="#ff4b1f" stroke="#0a0a0c" strokeWidth="2" />
       </svg>
       <div className="mt-0.5 flex items-baseline justify-center gap-1.5">
-        <span className={`font-grotesk text-[22px] font-bold leading-none tabular-nums ${hot ? 'text-signal' : 'text-bone'}`}>
+        <span className={`font-grotesk text-[18px] font-bold leading-none tabular-nums ${hot ? 'text-signal' : 'text-bone'}`}>
           {kmh}
         </span>
         <span className="font-grotesk text-[9px] font-semibold uppercase tracking-[0.2em] text-bone/55">km/h</span>
