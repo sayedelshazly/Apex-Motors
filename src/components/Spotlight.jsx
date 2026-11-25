@@ -58,7 +58,7 @@ export default function Spotlight() {
               initial={{ x: dir > 0 ? '100%' : '-100%', scale: 1.12, opacity: 0.6 }}
               animate={{ x: 0, scale: 1, opacity: 1 }}
               exit={{ x: dir > 0 ? '-100%' : '100%', scale: 1.08, opacity: 0.6 }}
-              transition={{ duration: 0.85, ease: [0.83, 0, 0.17, 1] }}
+              transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
               className="car-idle absolute inset-0 h-full w-full object-cover"
             />
           </AnimatePresence>
@@ -89,7 +89,7 @@ export default function Spotlight() {
               initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -18 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <p className="font-grotesk text-xs uppercase tracking-[0.35em] text-signal" dir="ltr">{car.brand} — {car.year}</p>
               <h3 className="mt-3 text-4xl font-black leading-tight text-bone md:text-5xl">{lang === 'ar' ? car.modelAr : car.model}</h3>

@@ -379,7 +379,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           <div
             ref={needleRef}
             className="absolute bottom-[13px] left-1/2 h-[62px] w-[3px] origin-bottom rounded bg-bone shadow-[0_0_10px_rgba(255,75,31,0.7)]"
-            style={{ transform: 'rotate(-90deg)', translate: '-50% 0' }}
+            style={{ transform: 'rotate(-90deg)', translate: '-50% 0', transition: 'transform .22s cubic-bezier(0.22, 1, 0.36, 1)' }}
           />
           <div className="absolute bottom-[6px] left-1/2 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-smoke bg-bone" />
           <div className="absolute inset-x-0 bottom-[-16px] text-center">

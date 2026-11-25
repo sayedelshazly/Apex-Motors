@@ -32,8 +32,9 @@ export default function ScrollSpeedo() {
       const y = window.scrollY;
       const inst = Math.abs(y - s.last) / dt; // px per ms
       s.last = y;
-      s.vel += (inst - s.vel) * 0.12;
-      setKmh(Math.min(MAX, Math.round(s.vel * 130)));
+      s.vel += (inst - s.vel) * 0.075;
+      const next = Math.min(MAX, Math.round(s.vel * 130));
+      setKmh((prev) => (prev === next ? prev : next));
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -88,7 +89,7 @@ export default function ScrollSpeedo() {
           style={{
             transform: `rotate(${angleFor(kmh)}deg)`,
             transformOrigin: '80px 76px',
-            transition: 'transform 90ms linear',
+            transition: 'transform 240ms cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         >
           <line x1="80" y1="76" x2="80" y2="34" stroke="#f5efe4" strokeWidth="3.5" strokeLinecap="round" />

@@ -145,3 +145,8 @@ body {
     transparent 2px 14px
   );
 }
+
+
+a, button, select, input, [role='button'] {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}

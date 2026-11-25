@@ -32,7 +32,7 @@ export default function HorizontalGallery() {
           start: 'top top',
           end: () => `+=${getAmount()}`,
           pin: true,
-          scrub: 1,
+          scrub: 1.35,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },

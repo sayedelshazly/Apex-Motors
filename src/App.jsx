@@ -80,7 +80,7 @@ export default function App() {
 
   // Lenis smooth scroll driven by GSAP's ticker (keeps ScrollTrigger in sync)
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.35, smoothWheel: true, easing: (t) => 1 - Math.pow(1 - t, 4) });
     window.__lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
     const tick = (time) => lenis.raf(time * 1000);
@@ -94,7 +94,7 @@ export default function App() {
       const el = document.querySelector(a.getAttribute('href'));
       if (el) {
         e.preventDefault();
-        lenis.scrollTo(el, { offset: 0, duration: 1.4 });
+        lenis.scrollTo(el, { offset: 0, duration: 1.6 });
       }
     };
     document.addEventListener('click', onClick);

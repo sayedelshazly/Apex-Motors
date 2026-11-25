@@ -79,7 +79,7 @@ export default function Preloader({ onDone }) {
           {/* needle — hub sits at (110,118) of the 220×190 viewBox */}
           <div
             className="absolute bottom-[37.9%] left-1/2 h-[36%] w-[4px] origin-bottom rounded-full bg-signal shadow-[0_0_14px_rgba(255,75,31,0.8)]"
-            style={{ transform: `rotate(${needleDeg}deg)`, translate: '-50% 0', transition: 'transform .12s linear' }}
+            style={{ transform: `rotate(${needleDeg}deg)`, translate: '-50% 0', transition: 'transform .5s cubic-bezier(0.22, 1, 0.36, 1)' }}
           />
           <div className="absolute bottom-[37.9%] left-1/2 h-5 w-5 -translate-x-1/2 translate-y-1/2 rounded-full border-[3px] border-[#232329] bg-[#f2f0ea]" />
           </div>

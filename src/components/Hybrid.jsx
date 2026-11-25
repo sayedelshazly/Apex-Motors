@@ -123,7 +123,7 @@ export default function Hybrid() {
                 initial={{ opacity: 0.3, scale: 1.04 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0.3 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="car-idle h-72 w-full object-cover md:h-[430px]"
                 style={{ filter: `saturate(1.2) hue-rotate(${ENGINE_HUE[engine.category] ?? 0}deg)` }}
               />

@@ -8,7 +8,7 @@ export function Reveal({ children, delay = 0, y = 36, className = '' }) {
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ delay, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ delay, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
@@ -37,7 +37,7 @@ export function SectionHeading({ tag, ar, en, stroke = false }) {
           viewport={{ once: true, margin: '-60px' }}
         >
           <motion.h2
-            variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } } }}
+            variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 1.05, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-5xl font-black leading-[1.05] text-bone md:text-7xl"
           >
             {heading}

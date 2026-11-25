@@ -21,7 +21,7 @@ function CarModal({ car, onClose }) {
         initial={{ y: 80, opacity: 0, scale: 0.98 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 60, opacity: 0, scale: 0.98 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         className="relative max-h-[92svh] w-full max-w-4xl overflow-y-auto bg-carbon"
         onClick={(e) => e.stopPropagation()}
       >
@@ -109,7 +109,7 @@ export default function Collection() {
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
               className={`group relative overflow-hidden bg-carbon ${car.id === 'supra' ? 'ring-2 ring-amber-400/80' : ''}`}
               data-cursor={t('coll.view')}
               onClick={() => setSelected(car)}

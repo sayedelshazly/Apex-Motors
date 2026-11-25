@@ -87,7 +87,7 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
             className="noise fixed inset-0 z-[150] flex flex-col bg-carbon"
           >
             <div className="flex items-center justify-between px-6 py-5 md:px-12">
