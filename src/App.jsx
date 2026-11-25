@@ -19,7 +19,6 @@ import TestDrive from './components/TestDrive';
 import Footer from './components/Footer';
 import ScrollSpeedo from './components/ScrollSpeedo';
 import SportScrollFx from './components/SportScrollFx';
-import BackToTop from './components/BackToTop';
 import { playRev } from './lib/revSound';
 import { playClick } from './lib/clickSound';
 
@@ -123,7 +122,6 @@ export default function App() {
       {mode === 'sport' && <div className="sport-glow pointer-events-none fixed inset-0 z-[90]" aria-hidden />}
       {mode === 'sport' && <SportScrollFx />}
       <ScrollSpeedo />
-      <BackToTop />
       <Navbar mode={mode} onToggleMode={toggleMode} />
 
       <main>
