@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Gauge, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpLeft, Gauge, Menu, X } from 'lucide-react';
 import { useLang } from '../i18n.jsx';
 import Logo from './Logo';
 
@@ -67,14 +67,6 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
               <span className="hidden font-grotesk text-[11px] uppercase tracking-[0.2em] sm:inline" dir="ltr">Sport</span>
               {sport && <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse-dot" />}
             </button>
-            <a
-              href="tel:+201099687092"
-              className="hidden items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black md:flex"
-              data-cursor={t('nav.call')}
-            >
-              <Phone size={15} />
-              <span dir="ltr">+20 109 968 7091</span>
-            </a>
             <button
               onClick={() => setOpen(true)}
               className="flex items-center gap-2 bg-white px-4 py-2 text-sm font-black text-black"
