@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Gauge, Languages, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpLeft, Gauge, Menu, Phone, X } from 'lucide-react';
 import { useLang } from '../i18n.jsx';
 
 const links = [
@@ -14,7 +14,7 @@ const links = [
 ];
 
 export default function Navbar({ mode = 'normal', onToggleMode }) {
-  const { lang, toggle, t } = useLang();
+  const { lang, setLang, t } = useLang();
   const sport = mode === 'sport';
   const [open, setOpen] = useState(false);
 
@@ -40,15 +40,20 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggle}
-              data-cursor={lang === 'ar' ? 'English' : 'عربي'}
-              aria-label={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
-              className="flex items-center gap-2 border border-white/40 px-3.5 py-2 text-sm font-bold text-white transition-colors hover:border-signal hover:text-signal"
-            >
-              <Languages size={15} />
-              <span className={lang === 'ar' ? 'font-grotesk text-[11px] uppercase tracking-[0.2em]' : 'text-[13px]'}>{lang === 'ar' ? 'EN' : 'عربي'}</span>
-            </button>
+            <div className="flex items-center rounded-full border border-white/25 p-0.5" role="group" aria-label="Language / اللغة">
+              {['ar', 'en'].map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  aria-pressed={lang === l}
+                  className={`rounded-full px-2.5 py-1 text-[11px] font-bold leading-none transition-all duration-300 ${
+                    lang === l ? 'bg-white text-black' : 'text-white/55 hover:text-white'
+                  } ${l === 'en' ? 'font-grotesk tracking-[0.08em]' : ''}`}
+                >
+                  {l === 'ar' ? 'عربي' : 'EN'}
+                </button>
+              ))}
+            </div>
             <button
               onClick={onToggleMode}
               data-cursor={sport ? t('nav.sportOff') : t('nav.sportOn')}
@@ -146,6 +151,20 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
               dir="ltr"
             >
               <span>Instagram — @elshazlymotors.eg</span>
+              <span className="flex items-center rounded-full border border-line p-0.5" dir="ltr">
+                {['ar', 'en'].map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    aria-pressed={lang === l}
+                    className={`rounded-full px-3 py-1 text-[11px] font-bold normal-case leading-none tracking-normal transition-all duration-300 ${
+                      lang === l ? 'bg-signal text-white' : 'text-dim hover:text-bone'
+                    } ${l === 'en' ? 'font-grotesk' : 'font-ar'}`}
+                  >
+                    {l === 'ar' ? 'عربي' : 'EN'}
+                  </button>
+                ))}
+              </span>
               <span>Open daily 10AM — 12AM</span>
             </motion.div>
           </motion.div>
