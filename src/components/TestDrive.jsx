@@ -65,7 +65,7 @@ export default function TestDrive() {
       <Reveal>
         <div className="relative mx-auto flex max-w-4xl flex-col overflow-hidden border border-line bg-void/40 md:flex-row">
           {/* small car preview */}
-          <div className="relative h-36 shrink-0 overflow-hidden md:h-auto md:w-56">
+          <div className="relative h-44 shrink-0 overflow-hidden md:h-auto md:w-80">
             <AnimatePresence mode="wait">
               <motion.img
                 key={car.id}
