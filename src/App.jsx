@@ -18,6 +18,7 @@ import TestDrive from './components/TestDrive';
 import Footer from './components/Footer';
 import ScrollSpeedo from './components/ScrollSpeedo';
 import SportScrollFx from './components/SportScrollFx';
+import BackToTop from './components/BackToTop';
 import { playRev } from './lib/revSound';
 import { playClick } from './lib/clickSound';
 
@@ -79,6 +80,7 @@ export default function App() {
   // Lenis smooth scroll driven by GSAP's ticker (keeps ScrollTrigger in sync)
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    window.__lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
     const tick = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
@@ -98,6 +100,7 @@ export default function App() {
     return () => {
       document.removeEventListener('click', onClick);
       gsap.ticker.remove(tick);
+      delete window.__lenis;
       lenis.destroy();
     };
   }, []);
@@ -119,6 +122,7 @@ export default function App() {
       {mode === 'sport' && <div className="sport-glow pointer-events-none fixed inset-0 z-[90]" aria-hidden />}
       {mode === 'sport' && <SportScrollFx />}
       <ScrollSpeedo />
+      <BackToTop />
       <Navbar mode={mode} onToggleMode={toggleMode} />
 
       <main>
