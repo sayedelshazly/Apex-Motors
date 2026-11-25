@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpLeft, Gauge, Menu, Phone, X } from 'lucide-react';
 import { useLang } from '../i18n.jsx';
+import Logo from './Logo';
 
 const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
@@ -27,7 +28,8 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
         className="fixed inset-x-0 top-0 z-[100] mix-blend-difference"
       >
         <div className="flex items-center justify-between px-6 py-5 md:px-12">
-          <a href="#hero" className="flex items-baseline gap-2" data-cursor="ELSHAZLY">
+          <a href="#hero" className="flex items-center gap-2.5" data-cursor="ELSHAZLY">
+            <Logo className="h-9 w-9 shrink-0 text-white" />
             <span className="font-display text-2xl tracking-wide text-white" dir="ltr">
               ELSHAZLY<span className="text-signal">.</span>
             </span>
@@ -100,8 +102,11 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             className="noise fixed inset-0 z-[150] flex flex-col bg-carbon"
           >
             <div className="flex items-center justify-between px-6 py-5 md:px-12">
-              <span className="font-display text-2xl text-bone" dir="ltr">
-                ELSHAZLY<span className="text-signal">.</span>
+              <span className="flex items-center gap-2.5">
+                <Logo className="h-8 w-8 shrink-0 text-bone" />
+                <span className="font-display text-2xl text-bone" dir="ltr">
+                  ELSHAZLY<span className="text-signal">.</span>
+                </span>
               </span>
               <button
                 onClick={() => setOpen(false)}

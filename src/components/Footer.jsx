@@ -1,6 +1,7 @@
 import { ArrowUp, AtSign, MapPin, Phone } from 'lucide-react';
 import { Reveal } from './Reveal';
 import { useLang } from '../i18n.jsx';
+import Logo from './Logo';
 
 export default function Footer() {
   const { t } = useLang();
@@ -30,6 +31,9 @@ export default function Footer() {
       </div>
 
       {/* giant wordmark */}
+      <div className="flex justify-center pb-3">
+        <Logo className="h-14 w-14 text-bone" />
+      </div>
       <div className="select-none px-2" dir="ltr" aria-hidden>
         <div className="text-stroke-faint whitespace-nowrap text-center font-display text-[16.5vw] leading-[0.78]">
           ELSHAZLY

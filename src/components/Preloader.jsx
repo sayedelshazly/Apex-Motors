@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { BatteryCharging, CircleGauge, Fuel, TriangleAlert } from 'lucide-react';
 import { useLang } from '../i18n.jsx';
+import Logo from './Logo';
 
 /**
  * Preloader as a car dashboard: ignition self-test lights, a big RPM
@@ -41,8 +42,11 @@ export default function Preloader({ onDone }) {
       transition={{ duration: 0.9, ease: [0.83, 0, 0.17, 1] }}
     >
       <div className="flex items-center justify-between font-grotesk text-[11px] uppercase tracking-[0.35em] text-[#9b978c]">
-        <span className="font-display text-lg tracking-wide text-[#f2f0ea]" dir="ltr">
-          ELSHAZLY<span className="text-signal">.</span>
+        <span className="flex items-center gap-2.5">
+          <Logo className="h-7 w-7 shrink-0 text-[#f2f0ea]" />
+          <span className="font-display text-lg tracking-wide text-[#f2f0ea]" dir="ltr">
+            ELSHAZLY<span className="text-signal">.</span>
+          </span>
         </span>
         <span className="flex items-center gap-2">
           <span className={`h-2 w-2 rounded-full ${count >= 100 ? 'bg-signal' : 'bg-amber-400 animate-pulse-dot'}`} />
