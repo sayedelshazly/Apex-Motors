@@ -6,6 +6,7 @@ const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
   { ar: 'النجم', en: 'SPOTLIGHT', href: '#spotlight' },
   { ar: 'التشكيلة', en: 'COLLECTION', href: '#collection' },
+  { ar: 'لوّن وحشك', en: 'CONFIGURE', href: '#configurator' },
   { ar: 'الجاليري', en: 'GALLERY', href: '#gallery' },
   { ar: 'إحنا مين', en: 'ABOUT', href: '#about' },
   { ar: 'كلّمنا', en: 'CONTACT', href: '#contact' },
