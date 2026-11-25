@@ -28,12 +28,8 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
         className="fixed inset-x-0 top-0 z-[100] mix-blend-difference"
       >
         <div className="flex items-center justify-between px-6 py-5 md:px-12">
-          <a href="#hero" className="flex items-center gap-2.5" data-cursor="ELSHAZLY">
-            <Logo className="h-9 w-9 shrink-0 text-white" />
-            <span className="font-display text-2xl tracking-wide text-white" dir="ltr">
-              ELSHAZLY<span className="text-signal">.</span>
-            </span>
-            <span className="hidden text-sm font-bold text-white/80 sm:block">{t('nav.motors')}</span>
+          <a href="#hero" className="flex items-center" data-cursor="ELSHAZLY" aria-label="ELSHAZLY MOTORS">
+            <Logo className="h-10 w-10 shrink-0 text-white" />
           </a>
 
           <div className="hidden items-center gap-3 font-grotesk text-[11px] uppercase tracking-[0.3em] text-white/70 lg:flex" dir="ltr">
@@ -102,12 +98,7 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             className="noise fixed inset-0 z-[150] flex flex-col bg-carbon"
           >
             <div className="flex items-center justify-between px-6 py-5 md:px-12">
-              <span className="flex items-center gap-2.5">
-                <Logo className="h-8 w-8 shrink-0 text-bone" />
-                <span className="font-display text-2xl text-bone" dir="ltr">
-                  ELSHAZLY<span className="text-signal">.</span>
-                </span>
-              </span>
+              <Logo className="h-9 w-9 shrink-0 text-bone" />
               <button
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 border border-line px-4 py-2 text-sm font-bold text-bone hover:border-signal hover:text-signal"
