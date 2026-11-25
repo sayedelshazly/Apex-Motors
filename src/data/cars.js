@@ -375,4 +375,4 @@ export const categories = [
   { id: 'electric', ar: 'كهربا', en: 'Electric' },
 ];
 
-export const heroCars = [cars[0], cars[3], cars[1], cars[2]]; // Chiron, LaFerrari, Huracán, 720S
+export const heroCars = [cars[0], cars[3], cars[1], cars[2], cars.find((c) => c.id === 'supra')]; // Chiron, LaFerrari, Huracán, 720S, Supra (featured legend)

@@ -32,6 +32,7 @@ function CarModal({ car, onClose }) {
           <img src={car.img} alt={car.model} className="car-idle h-full w-full object-cover" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-carbon to-transparent" />
           {carTag(car, lang) && <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">{carTag(car, lang)}</span>}
+          {car.id === 'supra' && <span className="absolute bottom-4 right-4 bg-amber-400 px-3 py-1.5 text-xs font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)]">{t('coll.legend')}</span>}
         </div>
         <div className="px-6 pb-8 pt-2 md:px-10">
           <p className="font-grotesk text-xs uppercase tracking-[0.35em] text-signal" dir="ltr">{car.brand} — {car.year}</p>
@@ -109,7 +110,7 @@ export default function Collection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden bg-carbon"
+              className={`group relative overflow-hidden bg-carbon ${car.id === 'supra' ? 'ring-2 ring-amber-400/80' : ''}`}
               data-cursor={t('coll.view')}
               onClick={() => setSelected(car)}
             >
@@ -122,6 +123,7 @@ export default function Collection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent" />
                 {carTag(car, lang) && <span className="absolute right-3 top-3 bg-signal px-2.5 py-1 text-[11px] font-black text-white">{carTag(car, lang)}</span>}
+                {car.id === 'supra' && <span className="absolute bottom-3 right-3 bg-amber-400 px-2.5 py-1 text-[11px] font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)]">{t('coll.legend')}</span>}
                 <span className="absolute left-3 top-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                   <ArrowUpLeft size={17} />
                 </span>

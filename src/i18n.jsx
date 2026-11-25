@@ -50,6 +50,7 @@ const STR = {
   'hyb.spiritLine': { ar: 'روح {spirit} باينة في شخصيته: التسارع اتظبط على مزاجها، والصوت اللي هتسمعه تحت ده صوت موتوره الحقيقي — دوّره.', en: 'The {spirit} spirit shapes its character: the sprint is tuned to its mood, and the voice below is its real engine — start it.' },
   'hyb.shuffle': { ar: 'خلّط عشوائي', en: 'Random Mix' },
   'hyb.wa': { ar: 'اسأل عن وحشك', en: 'Ask About Your Beast' },
+  'coll.legend': { ar: 'أيقونة التسعينات', en: '90s LEGEND' },
   'cmp.hp': { ar: 'القوة', en: 'Power' },
   'cmp.accel': { ar: 'التسارع 0—100', en: '0—100 Sprint' },
   'cmp.top': { ar: 'السرعة القصوى', en: 'Top Speed' },

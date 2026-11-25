@@ -14,10 +14,34 @@ const REDLINES = { hyper: 8500, super: 8200, sport: 7500, muscle: 6800, electric
 const REDLINE_OVERRIDES = { corvette: 8600, challenger: 6200, supra: 6800 };
 const IDLE = 950;
 
+/* Hand-tuned signature per car: how its voice differs from the family
+   profile — whistle/bov loudness, sub-bass weight, brightness, detune,
+   and the Supra's laggy turbo spool. sig = the note shown to visitors. */
+const SIGNATURES = {
+  chiron:      { subMul: 1.5, whistleMul: 1.15, brightMul: 0.9, sig: { ar: 'هدير W16 بأربعة تيربو — قوة هادية ومرعبة', en: 'W16 quad-turbo rumble — calm, terrifying power' } },
+  huracan:     { brightMul: 1.3, sig: { ar: 'صرخة V10 إيطالية لحد آخر نفس', en: 'Italian V10 scream to the last breath' } },
+  '720s':      { whistleMul: 1.2, brightMul: 1.1, sig: { ar: 'توين تيربو بريطاني حاد كالموس', en: 'British twin-turbo, sharp as a razor' } },
+  laferrari:   { brightMul: 1.3, sig: { ar: 'أوبرا V12 من مارانيلو', en: 'A V12 opera from Maranello' } },
+  'amg-gtr':   { subMul: 1.3, sig: { ar: 'زئير AMG العميق من الجحيم الأخضر', en: 'Deep AMG growl from the Green Hell' } },
+  m5:          { whistleMul: 1.1, subMul: 1.15, sig: { ar: 'V8 ألماني منضبط… لحد ما تدوس', en: 'Disciplined German V8 — until you floor it' } },
+  panamera:    { brightMul: 0.95, subMul: 1.1, sig: { ar: 'فخامة هادية بصوت V8 واثق', en: 'Quiet luxury, confident V8 voice' } },
+  mustang:     { subMul: 1.35, sig: { ar: 'لوب الكويوتي الأمريكاني الأصلي', en: 'Original American Coyote lope' } },
+  camaro:      { subMul: 1.3, sig: { ar: 'LT1 — عضلات خام من غير فلاتر', en: 'LT1 — raw muscle, no filters' } },
+  m440i:       { whistleMul: 1.25, sig: { ar: 'ستة سلندر B58 بصافرة تيربو ناعمة', en: 'B58 straight-six with a smooth turbo whistle' } },
+  'amg-gt':    { subMul: 1.3, brightMul: 1.05, sig: { ar: 'بيتوربو بيتنفس تقيل وبيزأر', en: 'Biturbo breathing heavy, roaring' } },
+  m4:          { whistleMul: 1.3, detune: 6, sig: { ar: 'S58 توين تيربو شرّاس ومتعصب', en: 'S58 twin-turbo — angry and proud' } },
+  gtr:         { whistleMul: 1.6, bovMul: 1.7, sig: { ar: 'جودزيلا: تيربوهات بتصفّر وبلو أوف بيعلن الحرب', en: 'Godzilla: whistling turbos, war-declaring blow-off' } },
+  'audi-r8':   { brightMul: 1.4, sig: { ar: 'أعلى صرخة V10 في التشكيلة', en: 'The highest V10 scream in the collection' } },
+  corvette:    { brightMul: 1.25, detune: 10, sig: { ar: 'فلات بلين بيغني لحد 8,600 لفة', en: 'Flat-plane crank singing to 8,600 rpm' } },
+  supra:       { whistleMul: 2.3, bovMul: 2.5, spool: true, brightMul: 1.1, sig: { ar: 'الأسطورة 2JZ: سبول التيربو… وبعده البلو أوف بيهز الشارع', en: 'The legendary 2JZ: turbo spool… then a street-shaking blow-off' } },
+  challenger:  { scMul: 2.0, subMul: 1.3, sig: { ar: 'واين السوبرتشارجير الشيطاني فوق هدير الهيمي', en: 'Demonic supercharger whine over HEMI thunder' } },
+  taycan:      { sig: { ar: 'همهمة كهربا من المستقبل', en: 'An electric hum from the future' } },
+};
+
 function engineProfile(car) {
   const e = car.engine || '';
   if (car.category === 'electric' || /Dual Motor|· EV/i.test(e)) {
-    return { ev: true, cyl: 0, turbo: false, supercharged: false, bright: 1, lope: 0 };
+    return { ev: true, cyl: 0, turbo: false, supercharged: false, bright: 1, lope: 0, sig: (SIGNATURES[car.id] || {}).sig };
   }
   let cyl = 8;
   if (/W16/.test(e)) cyl = 16;
@@ -32,13 +56,28 @@ function engineProfile(car) {
     flatPlane,
     turbo: /Turbo|Biturbo/i.test(e),
     supercharged: /Supercharged/i.test(e),
-    bright: cyl >= 10 || flatPlane ? 1.55 : cyl === 6 ? 1.15 : 0.9,
+    bright: (cyl >= 10 || flatPlane ? 1.55 : cyl === 6 ? 1.15 : 0.9) * ((SIGNATURES[car.id] || {}).brightMul || 1),
     lope: car.category === 'muscle' ? 1 : 0,
+    ...sigFields(car),
+  };
+}
+
+function sigFields(car) {
+  const g = SIGNATURES[car.id] || {};
+  return {
+    sig: g.sig,
+    brightMul: g.brightMul || 1,
+    whistleMul: g.whistleMul || 1,
+    bovMul: g.bovMul || 1,
+    subMul: g.subMul || 1,
+    scMul: g.scMul || 1,
+    spool: !!g.spool,
+    detune: g.detune || 0,
   };
 }
 
 export default function EngineStarter({ car, compact = false, onStateChange }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const profile = engineProfile(car);
   const redline = REDLINE_OVERRIDES[car.id] || REDLINES[car.category] || 7500;
   const [phase, setPhase] = useState('off'); // off | cranking | on
@@ -70,11 +109,11 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
     if (profile.ev) {
       osc1.type = 'sine'; osc2.type = 'triangle'; sub.type = 'sine';
     } else {
-      osc1.type = 'sawtooth'; osc2.type = 'sawtooth'; osc2.detune.value = 9; sub.type = 'square';
+      osc1.type = 'sawtooth'; osc2.type = 'sawtooth'; osc2.detune.value = 9 + (profile.detune || 0); sub.type = 'square';
     }
     const g1 = ctx.createGain(); g1.gain.value = 0.5;
     const g2 = ctx.createGain(); g2.gain.value = 0.28;
-    const gSub = ctx.createGain(); gSub.gain.value = 0.4;
+    const gSub = ctx.createGain(); gSub.gain.value = 0.4 * (profile.subMul || 1);
     osc1.connect(g1); g1.connect(filter);
     osc2.connect(g2); g2.connect(filter);
     sub.connect(gSub); gSub.connect(filter);
@@ -131,7 +170,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       bp.frequency.setValueAtTime(2900, ctx.currentTime);
       bp.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + 0.28);
       const g = ctx.createGain();
-      g.gain.setValueAtTime(0.22, ctx.currentTime);
+      g.gain.setValueAtTime(0.22 * (profile.bovMul || 1), ctx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
       src.connect(bp); bp.connect(g); g.connect(ctx.destination);
       src.start(); src.stop(ctx.currentTime + 0.32);
@@ -194,11 +233,13 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           a.master.gain.setTargetAtTime(vol, now, 0.06);
           if (a.whistle) {
             const wTarget = s.revHold && ratio > 0.2
-              ? (profile.supercharged ? 500 + ratio * 1700 : 350 + ratio * ratio * 2600)
+              ? profile.spool
+                ? 300 + Math.pow(ratio, 1.35) * 3300
+                : (profile.supercharged ? 500 + ratio * 1700 : 350 + ratio * ratio * 2600)
               : 300;
-            a.whistle.frequency.setTargetAtTime(wTarget, now, 0.05);
+            a.whistle.frequency.setTargetAtTime(wTarget, now, profile.spool ? 0.12 : 0.05);
             const wGain = s.revHold && ratio > 0.2
-              ? (profile.supercharged ? 0.055 : 0.032) * ratio
+              ? (profile.supercharged ? 0.055 * (profile.scMul || 1) : 0.032 * (profile.whistleMul || 1)) * ratio
               : 0;
             a.gWhistle.gain.setTargetAtTime(wGain, now, 0.07);
           }
@@ -258,7 +299,9 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
   };
 
   const ticks = Array.from({ length: 13 }, (_, i) => i / 12);
-  const voiceNote = profile.ev
+  const voiceNote = profile.sig
+    ? profile.sig[lang] || profile.sig.en
+    : profile.ev
     ? t('eng.voiceEv')
     : profile.supercharged
       ? t('eng.voiceSc')
