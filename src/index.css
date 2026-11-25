@@ -49,6 +49,14 @@ html[data-theme="light"] .car-shadow {
   opacity: 0.28;
 }
 
+/* ---------- Mobile feel ---------- */
+* { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+@media (pointer: coarse) {
+  /* the custom cursor is a mouse toy — hide it on touch devices */
+  .apex-cursor { display: none !important; }
+}
+
 html { scroll-behavior: auto; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

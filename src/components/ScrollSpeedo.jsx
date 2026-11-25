@@ -60,7 +60,7 @@ export default function ScrollSpeedo() {
       ref={boxRef}
       data-red="false"
       dir="ltr"
-      className="fixed bottom-4 left-4 z-[120] hidden select-none items-end gap-1 border border-line bg-void/70 px-3 pb-2 pt-1 backdrop-blur-md transition-shadow duration-300 data-[red=true]:shadow-[0_0_30px_rgba(255,75,31,0.35)] sm:flex"
+      className="fixed bottom-3 left-3 z-[120] flex origin-bottom-left scale-[0.68] select-none items-end gap-1 border border-line bg-void/70 px-3 pb-2 pt-1 backdrop-blur-md transition-shadow duration-300 data-[red=true]:shadow-[0_0_30px_rgba(255,75,31,0.35)] sm:bottom-4 sm:left-4 sm:scale-100"
       aria-hidden
     >
       <div className="relative w-[86px]">

@@ -47,7 +47,7 @@ export default function Spotlight() {
 
       <div className="relative grid items-center gap-10 lg:grid-cols-[1.5fr_1fr]">
         {/* cutout stage — the car floats on a lit podium */}
-        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-gradient-to-b from-smoke/70 via-carbon to-void" data-cursor="الوحش">
+        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-gradient-to-b from-smoke/70 via-carbon to-void max-lg:-order-1" data-cursor="الوحش">
           <span className="text-stroke-faint pointer-events-none absolute inset-x-0 top-6 select-none text-center font-display text-[7.5rem] leading-none md:text-[10rem]" dir="ltr" aria-hidden>
             {car.brand}
           </span>

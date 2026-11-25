@@ -49,6 +49,9 @@ def main():
     for path in files:
         name = os.path.splitext(os.path.basename(path))[0]
         dest = os.path.join(OUT, name + '.webp')
+        if os.path.exists(dest):
+            print(f'{name}: exists, skipped')
+            continue
         im = Image.open(path).convert('RGB')
         cut = remove(im, session=session)
         a = harden(np.array(cut.getchannel('A')))
