@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Rocket } from 'lucide-react';
+import { useLang } from '../i18n.jsx';
 
 /**
  * Floating launch-to-top button: a scroll-progress ring around a
  * rocket. One click and Lenis rockets you to the top at full speed.
  */
 export default function BackToTop() {
+  const { t } = useLang();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -47,8 +49,8 @@ export default function BackToTop() {
           exit={{ opacity: 0, y: 18, scale: 0.8 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           onClick={launch}
-          data-cursor="لأعلى 🚀"
-          aria-label="اطلع لأعلى بسرعة قصوى"
+          data-cursor={t('top.cursor')}
+          aria-label={t('top.aria')}
           className="group fixed bottom-5 right-5 z-[120] flex h-14 w-14 items-center justify-center rounded-full border border-signal/40 bg-void/80 shadow-[0_12px_34px_rgba(0,0,0,0.55)] backdrop-blur-md transition-colors hover:border-signal hover:bg-signal/15"
         >
           <svg viewBox="0 0 48 48" className="absolute inset-0 h-full w-full -rotate-90">

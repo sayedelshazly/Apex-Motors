@@ -15,7 +15,9 @@ export const cars = [
     category: 'hyper',
     categoryAr: 'هايبر',
     tag: 'الأقوى في المعرض',
+    tagEn: 'Strongest in the showroom',
     desc: 'وحش الـ W16 بألف وستمية حصان. دي مش عربية، دي تصريح حرب على الفيزيا.',
+    descEn: 'The W16 monster with 1,600 horsepower. This is not a car — it\'s a declaration of war on physics.',
   },
   {
     id: 'huracan',
@@ -33,7 +35,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: 'وصلت حديثًا',
+    tagEn: 'Just arrived',
     desc: 'صوت الـ V10 اللي بيخلي الشارع كله يبص. أصفر يخطف العين قبل الأذن.',
+    descEn: 'The V10 soundtrack that turns every head on the street. Yellow that grabs the eyes before the ears.',
   },
   {
     id: '720s',
@@ -51,7 +55,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: null,
+    tagEn: null,
     desc: 'كاربون فايبر من الأرض للسقف، وأبواب بتفتح لفوق كأنها مركبة فضائية.',
+    descEn: 'Carbon fibre from floor to roof, with doors that open upward like a spacecraft.',
   },
   {
     id: 'laferrari',
@@ -69,7 +75,9 @@ export const cars = [
     category: 'hyper',
     categoryAr: 'هايبر',
     tag: 'قطعة نادرة',
+    tagEn: 'Rare piece',
     desc: 'واحدة من ٤٩٩ نسخة في العالم كله. هايبرد V12 بيغني مش بيمشي.',
+    descEn: 'One of 499 in the whole world. A hybrid V12 that doesn\'t drive — it sings.',
   },
   {
     id: 'amg-gtr',
@@ -87,7 +95,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: null,
+    tagEn: null,
     desc: 'وحش الحلبات الألماني. جناح خلفي ثابت وغضب متحكم فيه.',
+    descEn: 'The German track weapon. A fixed rear wing and rage under total control.',
   },
   {
     id: 'm5',
@@ -105,7 +115,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: 'الأكثر مبيعًا',
+    tagEn: 'Best seller',
     desc: 'سيدان عائلية بروح سوبركار. توصل العيال المدرسة وتسبق أي حد في الطريق.',
+    descEn: 'A family sedan with a supercar soul. Drops the kids at school, then outruns everyone on the road.',
   },
   {
     id: 'panamera',
@@ -123,7 +135,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: null,
+    tagEn: null,
     desc: 'فخامة الألمان لما تقرر تجري. أربع أبواب وقلب عدّاء أولمبي.',
+    descEn: 'German luxury that decided to run. Four doors with the heart of an Olympic sprinter.',
   },
   {
     id: 'mustang',
@@ -141,7 +155,9 @@ export const cars = [
     category: 'muscle',
     categoryAr: 'عضلات',
     tag: null,
+    tagEn: null,
     desc: 'العضلات الأمريكية الأصلية. صوت V8 بيتصنع منه الأساطير من الستينات.',
+    descEn: 'Original American muscle. A V8 voice that legends have been built on since the sixties.',
   },
   {
     id: 'camaro',
@@ -159,7 +175,9 @@ export const cars = [
     category: 'muscle',
     categoryAr: 'عضلات',
     tag: null,
+    tagEn: null,
     desc: 'أزرق صحراوي وروح متمردة. الكامارو مش بتطلب إذن من حد.',
+    descEn: 'Desert blue with a rebel soul. The Camaro never asks anyone\'s permission.',
   },
   {
     id: 'm440i',
@@ -177,7 +195,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: null,
+    tagEn: null,
     desc: 'كوبيه أنيقة بست سلندرات. التوازن المثالي بين الشياكة والشقاوة.',
+    descEn: 'An elegant six-cylinder coupé. The perfect balance between class and mischief.',
   },
   {
     id: 'amg-gt',
@@ -195,7 +215,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: 'وصلت حديثًا',
+    tagEn: 'Just arrived',
     desc: 'صفرا كأن الشمس قررت تمشي على أربع عجلات. حضور مايتنسيش.',
+    descEn: 'Yellow — like the sun decided to roll on four wheels. A presence you never forget.',
   },
   {
     id: 'm4',
@@ -213,7 +235,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: null,
+    tagEn: null,
     desc: 'أخف وأشرس نسخة من الـ M4. معمولة للي بيفهموا في السواقة بجد.',
+    descEn: 'The lightest, fiercest M4 of all. Built for people who truly know how to drive.',
   },
   {
     id: 'gtr',
@@ -231,7 +255,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: 'جديدة',
+    tagEn: 'New',
     desc: 'الوحش الياباني اللي بيحرج السوبركارز وهو واقف. جودزيلا وصلت القاهرة.',
+    descEn: 'The Japanese monster that embarrasses supercars while standing still. Godzilla has landed in Cairo.',
   },
   {
     id: 'audi-r8',
@@ -249,7 +275,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: null,
+    tagEn: null,
     desc: 'من آخر مواتير الـ V10 التنفس طبيعي في العالم. صوتها أوبرا ألمانية.',
+    descEn: 'One of the last naturally-aspirated V10s on Earth. Its voice is German opera.',
   },
   {
     id: 'corvette',
@@ -267,7 +295,9 @@ export const cars = [
     category: 'super',
     categoryAr: 'سوبر',
     tag: 'الأعلى صوتًا',
+    tagEn: 'Loudest',
     desc: 'موتور فلات-بلاين بيصرخ لحد ٨٦٠٠ لفة. أقرب حاجة لفيراري، بسعر أمريكي.',
+    descEn: 'A flat-plane crank that screams to 8,600 rpm. The closest thing to a Ferrari, at an American price.',
   },
   {
     id: 'supra',
@@ -285,7 +315,9 @@ export const cars = [
     category: 'sport',
     categoryAr: 'رياضية',
     tag: 'كولكتر',
+    tagEn: 'Collector',
     desc: 'الـ 2JZ اللي بقت عملة نادرة. حالة استثنائية لعشاق التسعينات وبس.',
+    descEn: 'The 2JZ that became rare currency. Exceptional condition — for nineties lovers only.',
   },
   {
     id: 'challenger',
@@ -303,7 +335,9 @@ export const cars = [
     category: 'muscle',
     categoryAr: 'عضلات',
     tag: null,
+    tagEn: null,
     desc: 'سوبرتشارجر بيصفّر و٧١٧ حصان بيشدّوا. عضلات أمريكية من غير فلسفة.',
+    descEn: 'A whistling supercharger and 717 hp of pull. American muscle with zero philosophy.',
   },
   {
     id: 'taycan',
@@ -321,7 +355,9 @@ export const cars = [
     category: 'electric',
     categoryAr: 'كهربا',
     tag: 'كهربا ⚡',
+    tagEn: 'Electric ⚡',
     desc: 'صمت تام… وبعدين انطلاقة تكسر الرقبة. مستقبل بورشه وصل بدري.',
+    descEn: 'Total silence… then a neck-snapping launch. Porsche\'s future arrived early.',
   },
 ];
 
@@ -331,12 +367,12 @@ cars.forEach((c) => {
 });
 
 export const categories = [
-  { id: 'all', ar: 'الكل' },
-  { id: 'hyper', ar: 'هايبر' },
-  { id: 'super', ar: 'سوبر' },
-  { id: 'sport', ar: 'رياضية' },
-  { id: 'muscle', ar: 'عضلات أمريكية' },
-  { id: 'electric', ar: 'كهربا' },
+  { id: 'all', ar: 'الكل', en: 'All' },
+  { id: 'hyper', ar: 'هايبر', en: 'Hyper' },
+  { id: 'super', ar: 'سوبر', en: 'Super' },
+  { id: 'sport', ar: 'رياضية', en: 'Sports' },
+  { id: 'muscle', ar: 'عضلات أمريكية', en: 'American Muscle' },
+  { id: 'electric', ar: 'كهربا', en: 'Electric' },
 ];
 
 export const heroCars = [cars[0], cars[3], cars[1], cars[2]]; // Chiron, LaFerrari, Huracán, 720S

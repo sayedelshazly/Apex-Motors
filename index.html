@@ -9,6 +9,10 @@
     <script>
       // restore SPORT mode before first paint
       try {
+        if (localStorage.getItem('apex-lang') === 'en') {
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+        }
         if (localStorage.getItem('apex-mode') === 'sport') {
           document.documentElement.dataset.mode = 'sport';
         }

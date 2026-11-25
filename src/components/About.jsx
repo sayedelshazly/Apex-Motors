@@ -2,15 +2,24 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { BadgeCheck, HandCoins, KeyRound, ShieldCheck } from 'lucide-react';
 import { Reveal } from './Reveal';
+import { useLang } from '../i18n.jsx';
 
-const perks = [
+const perksAr = [
   { icon: BadgeCheck, t: 'فحص ٢١٠ نقطة', d: 'كل عربية بتعدي على فحص فني كامل قبل ما تدخل المعرض، وتقريرها بيوصلك قبل ما تدفع جنيه.' },
   { icon: HandCoins, t: 'تمويل وتقسيط', d: 'موافقة مبدئية في ٢٤ ساعة مع أكبر البنوك وشركات التمويل، ومقدم يبدأ من ٢٠٪.' },
   { icon: ShieldCheck, t: 'ضمان سنة كاملة', d: 'ضمان حقيقي على الموتور والفتيس، وصيانة مجانية أول ٦ شهور عندنا أو عند الوكيل.' },
   { icon: KeyRound, t: 'استبدال عربيتك', d: 'قيّم عربيتك القديمة في ٣٠ دقيقة وادفع الفرق بس. من غير لف ولا وجع دماغ.' },
 ];
+const perksEn = [
+  { icon: BadgeCheck, t: '210-point inspection', d: 'Every car passes a full technical inspection before entering the showroom — and the report reaches you before you pay a pound.' },
+  { icon: HandCoins, t: 'Financing & installments', d: 'Pre-approval within 24 hours with the biggest banks and finance companies, down payments from 20%.' },
+  { icon: ShieldCheck, t: 'Full 1-year warranty', d: 'A real warranty on engine and gearbox, plus free maintenance for the first 6 months — with us or the dealer.' },
+  { icon: KeyRound, t: 'Trade in your car', d: 'We value your old car in 30 minutes and you just pay the difference. No running around, no headaches.' },
+];
 
 export default function About() {
+  const { lang, t } = useLang();
+  const perks = lang === 'ar' ? perksAr : perksEn;
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
@@ -19,17 +28,17 @@ export default function About() {
     <section id="about" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
       <div className="grid items-center gap-12 lg:grid-cols-2">
         {/* parallax image */}
-        <div ref={ref} className="relative aspect-[4/3] overflow-hidden" data-cursor="المعرض">
+        <div ref={ref} className="relative aspect-[4/3] overflow-hidden" data-cursor={t('about.cursor')}>
           <motion.img
             src="/cars/ferrari.jpg"
-            alt="صالة عرض الشاذلي موتورز"
+            alt={t('about.imgAlt')}
             style={{ y, scale: 1.18 }}
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-void/60 to-transparent" />
           <div className="absolute bottom-5 right-5 border border-line bg-void/60 px-5 py-4 backdrop-blur-md">
             <div className="font-display text-3xl text-bone" dir="ltr">SINCE 2012</div>
-            <div className="mt-1 text-sm font-bold text-dim">١٢ سنة بنجمع الوحوش</div>
+            <div className="mt-1 text-sm font-bold text-dim">{t('about.since')}</div>
           </div>
         </div>
 
@@ -39,13 +48,12 @@ export default function About() {
               <span className="h-[2px] w-10 bg-signal" /> Who we are
             </p>
             <h2 className="text-4xl font-black leading-snug text-bone md:text-6xl">
-              إحنا مش معرض…
+              {t('about.titleA')}
               <br />
-              إحنا <span className="text-signal">نادي أصحاب</span> الذوق العالي
+              {t('about.titleB')} <span className="text-signal">{t('about.titleC')}</span> {t('about.titleD')}
             </h2>
             <p className="mt-6 max-w-xl leading-loose text-dim">
-              من ٢٠١٢ وإحنا بنسافر العالم ندوّر على العربيات اللي مش بتتلاقى: نسخ محدودة،
-              ألوان نادرة، وعدادات قليلة. كل عربية عندنا ليها حكاية، وشغلنا إن الحكاية دي تكمل معاك.
+              {t('about.body')}
             </p>
           </Reveal>
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Flame, Power, Zap } from 'lucide-react';
+import { useLang } from '../i18n.jsx';
 
 /**
  * Interactive engine starter with a PER-CAR synthesized voice.
@@ -37,6 +38,7 @@ function engineProfile(car) {
 }
 
 export default function EngineStarter({ car, compact = false, onStateChange }) {
+  const { t } = useLang();
   const profile = engineProfile(car);
   const redline = REDLINE_OVERRIDES[car.id] || REDLINES[car.category] || 7500;
   const [phase, setPhase] = useState('off'); // off | cranking | on
@@ -257,12 +259,12 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
 
   const ticks = Array.from({ length: 13 }, (_, i) => i / 12);
   const voiceNote = profile.ev
-    ? 'كهربا بالكامل — همهمة وصفارة موتور كهربائي'
+    ? t('eng.voiceEv')
     : profile.supercharged
-      ? 'سوبرتشارجر — اسمع الصفير وانت دايس'
+      ? t('eng.voiceSc')
       : profile.turbo
-        ? 'تيربو — اسمع الصفارة… ولما تسيب: بستشش 💨'
-        : `${profile.cyl} سلندر بصوتها المتولّد حسب شخصية الموتور`;
+        ? t('eng.voiceTurbo')
+        : t('eng.voiceCyl', { cyl: profile.cyl });
 
   return (
     <div
@@ -273,7 +275,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       <div className="flex items-center justify-between gap-3">
         <h4 className="flex items-center gap-2 font-black text-bone">
           {profile.ev ? <Zap size={17} className="text-signal" /> : <Flame size={17} className="text-signal" />}
-          {profile.ev ? 'شغّل الكهربا واسمع' : 'اسمع صوت الموتور'}
+          {profile.ev ? t('eng.listenEv') : t('eng.listen')}
         </h4>
         <span className="font-grotesk text-[10px] uppercase tracking-[0.25em] text-dim" dir="ltr">
           {car.engine}
@@ -314,7 +316,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
         <div className="flex w-full flex-1 flex-col items-stretch gap-3 pb-4">
           <button
             onClick={toggle}
-            data-cursor={phase === 'off' ? 'دوّر' : 'بطّل'}
+            data-cursor={phase === 'off' ? t('eng.cursorStart') : t('eng.cursorStop')}
             className={`group flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3.5 font-black transition-all duration-300 ${
               phase === 'off'
                 ? 'bg-signal text-white hover:scale-[1.03]'
@@ -323,8 +325,8 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           >
             <Power size={18} className={phase === 'cranking' ? 'animate-spin' : ''} />
             {phase === 'off'
-              ? (profile.ev ? 'شغّل الكهربا' : 'دوّر الموتور')
-              : phase === 'cranking' ? 'بيدوّر…' : 'بطّل'}
+              ? (profile.ev ? t('eng.startEv') : t('eng.start'))
+              : phase === 'cranking' ? t('eng.cranking') : t('eng.stop')}
           </button>
 
           <button
@@ -333,7 +335,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
             onPointerUp={() => hold(false)}
             onPointerLeave={() => hold(false)}
             onContextMenu={(e) => e.preventDefault()}
-            data-cursor="بنزين"
+            data-cursor={t('eng.cursorGas')}
             className={`min-h-12 touch-none rounded-full border px-5 py-3.5 font-black transition-all duration-150 ${
               phase !== 'on'
                 ? 'border-line text-dim/40'
@@ -342,17 +344,17 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
                   : 'border-bone/30 text-bone hover:border-signal hover:text-signal'
             }`}
           >
-            {profile.ev ? 'دوس كهربا — امسك الزرار ⚡' : 'دوس بنزين — امسك الزرار 🏁'}
+            {profile.ev ? t('eng.holdEv') : t('eng.hold')}
           </button>
 
           <p className="text-center text-xs leading-relaxed text-dim">
             {phase === 'off' && voiceNote}
-            {phase === 'cranking' && 'المارش شغال… ثواني ويدور'}
+            {phase === 'cranking' && t('eng.crankMsg')}
             {phase === 'on' && (revving
-              ? 'إيوه كده! خليك دايس'
+              ? t('eng.keepMsg')
               : profile.ev
-                ? `جاهزة للانطلاق — الموتور بيلف لحد ${(redline / 1000).toFixed(0)} ألف`
-                : `الموتور داير على السلانسيه — الردلاين عند ${(redline / 1000).toFixed(1)} ألف`)}
+                ? t('eng.readyMsg', { k: (redline / 1000).toFixed(0) })
+                : t('eng.idleMsg', { k: (redline / 1000).toFixed(1) }))}
           </p>
         </div>
       </div>

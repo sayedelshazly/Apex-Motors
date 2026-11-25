@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Gauge, Timer, Wind } from 'lucide-react';
+import { useLang } from '../i18n.jsx';
 
 const line = {
   hidden: { y: '115%' },
@@ -38,6 +39,7 @@ function SpecCard({ className, icon: Icon, value, unit, label, delay }) {
 }
 
 export default function Hero({ started }) {
+  const { t } = useLang();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '22%']);
@@ -74,7 +76,7 @@ export default function Hero({ started }) {
           className="mb-3 flex items-center gap-3 text-base font-bold text-bone md:text-lg"
         >
           <span className="h-[2px] w-10 bg-signal" />
-          معرض السيارات الفاخرة — القاهرة الجديدة
+          {t('hero.eyebrow')}
         </motion.p>
 
         <h1 className="font-display leading-[0.82]" dir="ltr">
@@ -97,8 +99,8 @@ export default function Hero({ started }) {
             transition={{ delay: 0.85, duration: 0.7 }}
             className="max-w-md text-lg font-semibold leading-relaxed text-bone/85"
           >
-            مش بنبيع عربيات… إحنا بنسلّمك وحش.
-            <span className="text-dim"> أندر وأقوى العربيات في مصر، مختارة قطعة قطعة.</span>
+            {t('hero.subA')}
+            <span className="text-dim"> {t('hero.subB')}</span>
           </motion.p>
 
           <motion.a
@@ -107,9 +109,9 @@ export default function Hero({ started }) {
             transition={{ delay: 1, duration: 0.7 }}
             href="#collection"
             className="group flex items-center gap-3 rounded-full bg-bone px-7 py-3.5 font-black text-void transition-colors hover:bg-signal hover:text-white"
-            data-cursor="يلا بينا"
+            data-cursor={t('hero.go')}
           >
-            اكتشف التشكيلة
+            {t('hero.cta')}
             <ArrowDown className="transition-transform duration-300 group-hover:translate-y-1" size={18} />
           </motion.a>
         </div>
