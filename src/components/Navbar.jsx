@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Menu, Moon, Phone, Sun, X } from 'lucide-react';
+import { ArrowUpLeft, Menu, Phone, X } from 'lucide-react';
 
 const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
   { ar: 'النجم', en: 'SPOTLIGHT', href: '#spotlight' },
   { ar: 'التشكيلة', en: 'COLLECTION', href: '#collection' },
-  { ar: 'لوّن وحشك', en: 'CONFIGURE', href: '#configurator' },
   { ar: 'الجاليري', en: 'GALLERY', href: '#gallery' },
   { ar: 'إحنا مين', en: 'ABOUT', href: '#about' },
   { ar: 'كلّمنا', en: 'CONTACT', href: '#contact' },
 ];
 
-export default function Navbar({ theme, onToggleTheme }) {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,15 +36,6 @@ export default function Navbar({ theme, onToggleTheme }) {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={onToggleTheme}
-              className="flex items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black"
-              data-cursor={theme === 'dark' ? 'نوّر الكشافات' : 'طفي النور'}
-              aria-label={theme === 'dark' ? 'التحول للوضع النهاري' : 'التحول للوضع الليلي'}
-            >
-              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-              <span className="hidden sm:inline">{theme === 'dark' ? 'نهاري' : 'ليلي'}</span>
-            </button>
             <a
               href="tel:+201099687092"
               className="hidden items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black md:flex"

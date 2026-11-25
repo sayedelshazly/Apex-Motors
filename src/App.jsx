@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import gsap from 'gsap';
@@ -11,42 +11,16 @@ import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Spotlight from './components/Spotlight';
 import Collection from './components/Collection';
-import Configurator from './components/Configurator';
 import HorizontalGallery from './components/HorizontalGallery';
 import About from './components/About';
 import TestDrive from './components/TestDrive';
 import Footer from './components/Footer';
 import ScrollSpeedo from './components/ScrollSpeedo';
-import HeadlightFlash from './components/HeadlightFlash';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState(
-    () => document.documentElement.dataset.theme || 'dark'
-  );
-  const [flash, setFlash] = useState(null); // { id, to }
-  const timers = useRef([]);
-
-  const toggleTheme = () => {
-    const to = theme === 'dark' ? 'light' : 'dark';
-    timers.current.forEach(clearTimeout);
-    document.documentElement.classList.add('theming');
-    setFlash({ id: Date.now(), to });
-    // flip mid-flash, while the beams are at full blast
-    timers.current.push(setTimeout(() => {
-      setTheme(to);
-      document.documentElement.dataset.theme = to;
-      try { localStorage.setItem('apex-theme', to); } catch { /* private mode */ }
-    }, 720));
-    timers.current.push(setTimeout(() => setFlash(null), 2050));
-    timers.current.push(setTimeout(() => {
-      document.documentElement.classList.remove('theming');
-    }, 2300));
-  };
-
-  useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
   // Lenis smooth scroll driven by GSAP's ticker (keeps ScrollTrigger in sync)
   useEffect(() => {
@@ -87,9 +61,8 @@ export default function App() {
       </AnimatePresence>
 
       <Cursor />
-      <AnimatePresence>{flash && <HeadlightFlash key={flash.id} to={flash.to} />}</AnimatePresence>
       <ScrollSpeedo />
-      <Navbar theme={theme} onToggleTheme={toggleTheme} />
+      <Navbar />
 
       <main>
         <Hero started={!loading} />
@@ -97,7 +70,6 @@ export default function App() {
         <Spotlight />
         <HorizontalGallery />
         <Collection />
-        <Configurator />
         <Marquee dark />
         <About />
         <TestDrive />
