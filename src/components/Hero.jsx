@@ -104,12 +104,12 @@ export default function Hero({ started }) {
 
         <h1 className="font-display leading-[0.82]" dir="ltr">
           <span className="block overflow-hidden">
-            <motion.span custom={0} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="block text-[19vw] tracking-tight text-bone md:text-[15.5rem]">
-              APEX
+            <motion.span custom={0} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="block text-[13vw] tracking-tight text-bone md:text-[10.8rem]">
+              ELSHAZLY
             </motion.span>
           </span>
           <span className="block overflow-hidden">
-            <motion.span custom={1} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="text-stroke block text-[19vw] tracking-tight md:text-[15.5rem]">
+            <motion.span custom={1} variants={line} initial="hidden" animate={started ? 'show' : 'hidden'} className="text-stroke block text-[13vw] tracking-tight md:text-[10.8rem]">
               MOTORS
             </motion.span>
           </span>

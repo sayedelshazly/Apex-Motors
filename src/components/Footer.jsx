@@ -30,8 +30,8 @@ export default function Footer() {
 
       {/* giant wordmark */}
       <div className="select-none px-2" dir="ltr" aria-hidden>
-        <div className="text-stroke-faint whitespace-nowrap text-center font-display text-[18.5vw] leading-[0.78]">
-          APEX MOTORS
+        <div className="text-stroke-faint whitespace-nowrap text-center font-display text-[16.5vw] leading-[0.78]">
+          ELSHAZLY
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export default function Footer() {
             <Phone size={15} className="text-signal" /> +20 109 968 7092
           </a>
           <a href="#hero" className="flex items-center gap-2 hover:text-bone" dir="ltr">
-            <AtSign size={15} className="text-signal" /> apexmotors.eg
+            <AtSign size={15} className="text-signal" /> elshazlymotors.eg
           </a>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

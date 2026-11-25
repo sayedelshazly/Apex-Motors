@@ -22,7 +22,7 @@ export default function About() {
         <div ref={ref} className="relative aspect-[4/3] overflow-hidden" data-cursor="المعرض">
           <motion.img
             src="/cars/ferrari.jpg"
-            alt="صالة عرض أبيكس موتورز"
+            alt="صالة عرض الشاذلي موتورز"
             style={{ y, scale: 1.18 }}
             className="h-full w-full object-cover"
           />

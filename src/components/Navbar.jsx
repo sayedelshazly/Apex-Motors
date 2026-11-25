@@ -23,9 +23,9 @@ export default function Navbar({ theme, onToggleTheme }) {
         className="fixed inset-x-0 top-0 z-[100] mix-blend-difference"
       >
         <div className="flex items-center justify-between px-6 py-5 md:px-12">
-          <a href="#hero" className="flex items-baseline gap-2" data-cursor="APEX">
+          <a href="#hero" className="flex items-baseline gap-2" data-cursor="ELSHAZLY">
             <span className="font-display text-2xl tracking-wide text-white" dir="ltr">
-              APEX<span className="text-signal">.</span>
+              ELSHAZLY<span className="text-signal">.</span>
             </span>
             <span className="hidden text-sm font-bold text-white/80 sm:block">موتورز</span>
           </a>
@@ -77,7 +77,7 @@ export default function Navbar({ theme, onToggleTheme }) {
           >
             <div className="flex items-center justify-between px-6 py-5 md:px-12">
               <span className="font-display text-2xl text-bone" dir="ltr">
-                APEX<span className="text-signal">.</span>
+                ELSHAZLY<span className="text-signal">.</span>
               </span>
               <button
                 onClick={() => setOpen(false)}
@@ -126,7 +126,7 @@ export default function Navbar({ theme, onToggleTheme }) {
               className="flex flex-wrap items-center justify-between gap-3 px-6 pb-8 font-grotesk text-[11px] uppercase tracking-[0.3em] text-dim md:px-12"
               dir="ltr"
             >
-              <span>Instagram — @apexmotors.eg</span>
+              <span>Instagram — @elshazlymotors.eg</span>
               <span>Open daily 10AM — 12AM</span>
             </motion.div>
           </motion.div>

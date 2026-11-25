@@ -1,4 +1,4 @@
-# APEX MOTORS — أبيكس موتورز
+# ELSHAZLY MOTORS — الشاذلي موتورز
 
 موقع تعريفي (Front-End فقط) لمعرض سيارات فاخرة، بستايل داكن سينمائي مستوحى من مرجع إنستجرام
 (موقع AUREL من Batikha Studio): خلفية سوداء، لمسات حمراء، طباعة عملاقة، بطاقات مواصفات عائمة،
@@ -49,6 +49,6 @@ npm run preview  # معاينة البناء: http://localhost:4173
 - **الصور:** `public/cars/` — صور Unsplash مجانية، استبدلها بصور المعرض الحقيقية قبل الإطلاق التجاري
 - **الألوان:** `src/index.css` في `@theme` (`--color-signal` للأحمر، `--color-void` للخلفية)
 - **رقم التواصل:** مكوّنات `Navbar` و`Footer` (حاليًا رقم تجريبي)
-- **اسم المعرض:** ابحث عن `APEX` في `src/components/` واستبدله
+- **اسم المعرض:** ابحث عن `ELSHAZLY` في `src/components/` واستبدله
 
 > ملحوظة: الخطوط (Anton + Cairo + Space Grotesk) بتتحمل من Google Fonts، فمحتاجة إنترنت أول مرة.

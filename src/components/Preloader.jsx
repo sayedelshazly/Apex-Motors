@@ -40,7 +40,7 @@ export default function Preloader({ onDone }) {
     >
       <div className="flex items-center justify-between font-grotesk text-[11px] uppercase tracking-[0.35em] text-[#9b978c]">
         <span className="font-display text-lg tracking-wide text-[#f2f0ea]" dir="ltr">
-          APEX<span className="text-signal">.</span>
+          ELSHAZLY<span className="text-signal">.</span>
         </span>
         <span className="flex items-center gap-2">
           <span className={`h-2 w-2 rounded-full ${count >= 100 ? 'bg-signal' : 'bg-amber-400 animate-pulse-dot'}`} />
