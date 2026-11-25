@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useLang } from '../i18n.jsx';
 
 /** Fade/slide reveal when scrolled into view */
 export function Reveal({ children, delay = 0, y = 36, className = '' }) {
@@ -17,6 +18,9 @@ export function Reveal({ children, delay = 0, y = 36, className = '' }) {
 
 /** Section heading: small tag + huge bilingual title with line-mask reveal */
 export function SectionHeading({ tag, ar, en, stroke = false }) {
+  const { lang } = useLang();
+  const heading = lang === 'ar' ? ar : en;
+  const watermark = lang === 'ar' ? en : ar;
   return (
     <div className="relative z-10 mb-12 md:mb-16">
       <Reveal>
@@ -36,7 +40,7 @@ export function SectionHeading({ tag, ar, en, stroke = false }) {
             variants={{ hidden: { y: '110%' }, show: { y: 0, transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } } }}
             className="text-5xl font-black leading-[1.05] text-bone md:text-7xl"
           >
-            {ar}
+            {heading}
           </motion.h2>
         </motion.div>
         <span
@@ -44,7 +48,7 @@ export function SectionHeading({ tag, ar, en, stroke = false }) {
           dir="ltr"
           aria-hidden
         >
-          {en}
+          {watermark}
         </span>
       </div>
     </div>

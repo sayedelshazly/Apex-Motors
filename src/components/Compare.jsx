@@ -3,29 +3,31 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeftRight, ChevronDown, Crown, Swords } from 'lucide-react';
 import { Reveal, SectionHeading } from './Reveal';
 import { cars } from '../data/cars';
+import { useLang, carName } from '../i18n.jsx';
 
 const priceNum = (car) => parseInt(car.price.replace(/,/g, ''), 10);
 
 const STATS = [
-  { key: 'hp', label: 'القوة', unit: 'HP', better: 'high', get: (c) => c.hp, fmt: (v) => v.toLocaleString('en-US') },
-  { key: 'accel', label: 'التسارع 0—100', unit: 'SEC', better: 'low', get: (c) => c.accel, fmt: (v) => v.toFixed(1) },
-  { key: 'topSpeed', label: 'السرعة القصوى', unit: 'KM/H', better: 'high', get: (c) => c.topSpeed, fmt: (v) => v },
-  { key: 'year', label: 'سنة الصنع', unit: '', better: 'high', get: (c) => c.year, fmt: (v) => v },
-  { key: 'price', label: 'الأوفر سعرًا', unit: 'EGP', better: 'low', get: priceNum, fmt: (v) => (v >= 1e6 ? `${parseFloat((v / 1e6).toFixed(1))}M` : v.toLocaleString('en-US')) },
+  { key: 'hp', labelKey: 'cmp.hp', unit: 'HP', better: 'high', get: (c) => c.hp, fmt: (v) => v.toLocaleString('en-US') },
+  { key: 'accel', labelKey: 'cmp.accel', unit: 'SEC', better: 'low', get: (c) => c.accel, fmt: (v) => v.toFixed(1) },
+  { key: 'topSpeed', labelKey: 'cmp.top', unit: 'KM/H', better: 'high', get: (c) => c.topSpeed, fmt: (v) => v },
+  { key: 'year', labelKey: 'cmp.year', unit: '', better: 'high', get: (c) => c.year, fmt: (v) => v },
+  { key: 'price', labelKey: 'cmp.price', unit: 'EGP', better: 'low', get: priceNum, fmt: (v) => (v >= 1e6 ? `${parseFloat((v / 1e6).toFixed(1))}M` : v.toLocaleString('en-US')) },
 ];
 
 function CarPicker({ car, other, onPick, align = 'start' }) {
+  const { lang, t } = useLang();
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center gap-3 border border-white/15 bg-white/[0.03] px-3 py-2.5 text-start transition-colors hover:border-signal/60"
-        data-cursor="غيّر الوحش"
+        data-cursor={t('cmp.change')}
       >
         <img src={car.img} alt={car.model} className="h-11 w-16 shrink-0 object-cover" />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-bold text-bone">{car.brandAr} {car.modelAr}</span>
+          <span className="block truncate text-sm font-bold text-bone">{carName(car, lang)}</span>
           <span className="block font-grotesk text-[10px] uppercase tracking-[0.18em] text-bone/45" dir="ltr">{car.brand} · {car.year}</span>
         </span>
         <ChevronDown size={16} className={`shrink-0 text-signal transition-transform ${open ? 'rotate-180' : ''}`} />
@@ -48,8 +50,8 @@ function CarPicker({ car, other, onPick, align = 'start' }) {
                 <img src={c.img} alt={c.model} className="h-9 w-14 shrink-0 object-cover" loading="lazy" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[13px] font-bold text-bone">
-                    {c.brandAr} {c.modelAr}
-                    {c.id === other.id && <span className="ms-2 text-[10px] font-semibold text-signal">في المواجهة</span>}
+                    {carName(c, lang)}
+                    {c.id === other.id && <span className="ms-2 text-[10px] font-semibold text-signal">{t('cmp.inDuel')}</span>}
                   </span>
                   <span className="block font-grotesk text-[10px] text-bone/45" dir="ltr">{c.hp} HP · {c.price} EGP</span>
                 </span>
@@ -63,6 +65,7 @@ function CarPicker({ car, other, onPick, align = 'start' }) {
 }
 
 function FighterPhoto({ car, flip = false }) {
+  const { lang } = useLang();
   return (
     <div className="relative aspect-[16/9] overflow-hidden bg-carbon">
       <AnimatePresence mode="popLayout">
@@ -81,7 +84,7 @@ function FighterPhoto({ car, flip = false }) {
       <div className="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent" />
       <div className="absolute bottom-3 right-4 left-4">
         <p className="font-grotesk text-[10px] uppercase tracking-[0.3em] text-signal" dir="ltr">{car.brand}</p>
-        <p className="text-lg font-black leading-tight text-bone">{car.brandAr} {car.modelAr}</p>
+        <p className="text-lg font-black leading-tight text-bone">{carName(car, lang)}</p>
         <p className="font-grotesk text-[10px] tracking-[0.14em] text-bone/55" dir="ltr">{car.engine}</p>
       </div>
     </div>
@@ -89,6 +92,7 @@ function FighterPhoto({ car, flip = false }) {
 }
 
 export default function Compare() {
+  const { lang, t } = useLang();
   const [leftId, setLeftId] = useState('chiron');
   const [rightId, setRightId] = useState(() => (cars.find((c) => c.id === 'laferrari') || cars[1]).id);
   const left = cars.find((c) => c.id === leftId) || cars[0];
@@ -123,7 +127,7 @@ export default function Compare() {
 
   const champion = leftWins === rightWins ? null : leftWins > rightWins ? left : right;
   const waText = champion
-    ? encodeURIComponent(`عايز أعرف تفاصيل ${champion.brandAr} ${champion.modelAr} (${champion.price} جنيه) — شفتها كسبت في المقارنة عندكم 🏆`)
+    ? encodeURIComponent(t('cmp.waText', { name: carName(champion, lang), price: champion.price }))
     : '';
 
   return (
@@ -132,7 +136,7 @@ export default function Compare() {
 
       <Reveal>
         <div className="grid items-start gap-4 lg:grid-cols-[1fr_auto_1fr]" dir="ltr">
-          <div className="space-y-3" dir="rtl">
+          <div className="space-y-3" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             <CarPicker car={left} other={right} onPick={pick('left')} />
             <FighterPhoto car={left} />
           </div>
@@ -140,16 +144,16 @@ export default function Compare() {
           <div className="flex items-center justify-center lg:pt-24">
             <button
               onClick={swap}
-              data-cursor="بدّل"
+              data-cursor={t('cmp.swap')}
               className="group relative flex h-16 w-16 items-center justify-center rounded-full border border-signal/50 bg-void/80 backdrop-blur transition-transform hover:scale-110"
-              aria-label="بدّل العربيات"
+              aria-label={t('cmp.swap')}
             >
               <span className="font-display text-xl text-signal" dir="ltr">VS</span>
               <ArrowLeftRight size={13} className="absolute -bottom-1 -right-1 rounded-full bg-signal p-0.5 text-void" />
             </button>
           </div>
 
-          <div className="space-y-3" dir="rtl">
+          <div className="space-y-3" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
             <CarPicker car={right} other={left} onPick={pick('right')} align="end" />
             <FighterPhoto car={right} flip />
           </div>
@@ -173,7 +177,7 @@ export default function Compare() {
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 />
               </div>
-              <span className="min-w-20 text-center text-xs font-bold text-bone/75 max-sm:min-w-14 max-sm:text-[10px]" dir="rtl">{r.label}</span>
+              <span className="min-w-20 text-center text-xs font-bold text-bone/75 max-sm:min-w-14 max-sm:text-[10px]">{t(r.labelKey)}</span>
               <div className="flex h-2.5 overflow-hidden rounded-full bg-white/8">
                 <motion.div
                   className={`h-full rounded-full ${r.winner === 'R' ? 'bg-signal shadow-[0_0_12px_rgba(255,75,31,0.6)]' : 'bg-bone/35'}`}
@@ -204,7 +208,7 @@ export default function Compare() {
                 <>
                   <p className="flex items-center justify-center gap-2 text-lg font-black text-bone sm:text-xl">
                     <Crown className="text-signal" size={22} />
-                    الفائز: {champion.brandAr} {champion.modelAr}
+                    {t('cmp.winner')}: {carName(champion, lang)}
                     <span className="font-grotesk text-sm text-bone/50" dir="ltr">{leftWins} — {rightWins}</span>
                   </p>
                   <a
@@ -212,14 +216,14 @@ export default function Compare() {
                     target="_blank"
                     rel="noreferrer"
                     className="btn-primary mt-4 inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"
-                    data-cursor="كلّمنا"
+                    data-cursor={lang === 'ar' ? 'كلّمنا' : 'Ask us'}
                   >
                     <Swords size={15} />
-                    اسأل عن الفائز واتساب
+                    {t('cmp.waBtn')}
                   </a>
                 </>
               ) : (
-                <p className="text-lg font-black text-bone">تعادل كامل — وحشين بنفس القوة 🤝</p>
+                <p className="text-lg font-black text-bone">{t('cmp.tie')}</p>
               )}
             </motion.div>
           </AnimatePresence>

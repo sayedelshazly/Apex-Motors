@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Gauge, Timer, Wind } from 'lucide-react';
 import { heroCars } from '../data/cars';
+import { useLang, carDesc, carTag } from '../i18n.jsx';
 import { SectionHeading } from './Reveal';
 import EngineStarter from './EngineStarter';
 
@@ -24,6 +25,7 @@ function Counter({ value, active }) {
 }
 
 export default function Spotlight() {
+  const { lang, t } = useLang();
   const [[idx, dir], setIdx] = useState([0, 1]);
   const [engineOn, setEngineOn] = useState(false);
   const car = heroCars[idx];
@@ -47,7 +49,7 @@ export default function Spotlight() {
 
       <div className="relative grid items-center gap-10 lg:grid-cols-[1.5fr_1fr]">
         {/* image stage */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-carbon max-lg:-order-1" data-cursor="الوحش">
+        <div className="relative aspect-[16/10] overflow-hidden bg-carbon max-lg:-order-1" data-cursor={t('spot.beast')}>
           <AnimatePresence custom={dir} mode="popLayout">
             <motion.img
               key={car.id}
@@ -63,17 +65,17 @@ export default function Spotlight() {
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-void/85 to-transparent" />
           {car.tag && (
             <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">
-              {car.tag}
+              {carTag(car, lang)}
             </span>
           )}
           <div className="absolute bottom-4 left-5 font-display text-xl tracking-widest text-bone/90" dir="ltr">
             0{idx + 1} <span className="text-dim">/ 0{heroCars.length}</span>
           </div>
           <div className="absolute bottom-4 right-4 flex gap-2" dir="ltr">
-            <button onClick={() => go(-1)} className="flex h-11 w-11 items-center justify-center border border-bone/30 bg-void/50 text-bone backdrop-blur transition-colors hover:bg-signal hover:border-signal" aria-label="السابق" data-cursor="قبل">
+            <button onClick={() => go(-1)} className="flex h-11 w-11 items-center justify-center border border-bone/30 bg-void/50 text-bone backdrop-blur transition-colors hover:bg-signal hover:border-signal" aria-label={t('spot.prev')} data-cursor={t('spot.prev')}>
               <ArrowLeft size={18} />
             </button>
-            <button onClick={() => go(1)} className="flex h-11 w-11 items-center justify-center border border-bone/30 bg-void/50 text-bone backdrop-blur transition-colors hover:bg-signal hover:border-signal" aria-label="التالي" data-cursor="بعد">
+            <button onClick={() => go(1)} className="flex h-11 w-11 items-center justify-center border border-bone/30 bg-void/50 text-bone backdrop-blur transition-colors hover:bg-signal hover:border-signal" aria-label={t('spot.next')} data-cursor={t('spot.next')}>
               <ArrowRight size={18} />
             </button>
           </div>
@@ -90,9 +92,9 @@ export default function Spotlight() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="font-grotesk text-xs uppercase tracking-[0.35em] text-signal" dir="ltr">{car.brand} — {car.year}</p>
-              <h3 className="mt-3 text-4xl font-black leading-tight text-bone md:text-5xl">{car.modelAr}</h3>
-              <p className="font-display mt-1 text-xl tracking-wide text-dim" dir="ltr">{car.model}</p>
-              <p className="mt-5 leading-relaxed text-dim">{car.desc}</p>
+              <h3 className="mt-3 text-4xl font-black leading-tight text-bone md:text-5xl">{lang === 'ar' ? car.modelAr : car.model}</h3>
+              {lang === 'ar' && <p className="font-display mt-1 text-xl tracking-wide text-dim" dir="ltr">{car.model}</p>}
+              <p className="mt-5 leading-relaxed text-dim">{carDesc(car, lang)}</p>
 
               <div className="mt-8 grid grid-cols-3 gap-px border border-line bg-line" dir="ltr">
                 {[
@@ -113,13 +115,13 @@ export default function Spotlight() {
 
               <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <div className="text-xs text-dim">السعر يبدأ من</div>
+                  <div className="text-xs text-dim">{t('spot.priceFrom')}</div>
                   <div className="font-display text-3xl text-bone" dir="ltr">
                     {car.price} <span className="text-base text-signal">EGP</span>
                   </div>
                 </div>
-                <a href="#testdrive" className="rounded-full bg-signal px-7 py-3.5 font-black text-white transition-transform hover:scale-105" data-cursor="احجز">
-                  احجز تجربة قيادة
+                <a href="#testdrive" className="rounded-full bg-signal px-7 py-3.5 font-black text-white transition-transform hover:scale-105" data-cursor={t('spot.book')}>
+                  {t('spot.book')}
                 </a>
               </div>
 

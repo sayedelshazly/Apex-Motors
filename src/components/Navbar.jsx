@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Gauge, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpLeft, Gauge, Languages, Menu, Phone, X } from 'lucide-react';
+import { useLang } from '../i18n.jsx';
 
 const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
@@ -13,6 +14,7 @@ const links = [
 ];
 
 export default function Navbar({ mode = 'normal', onToggleMode }) {
+  const { lang, toggle, t } = useLang();
   const sport = mode === 'sport';
   const [open, setOpen] = useState(false);
 
@@ -29,7 +31,7 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             <span className="font-display text-2xl tracking-wide text-white" dir="ltr">
               ELSHAZLY<span className="text-signal">.</span>
             </span>
-            <span className="hidden text-sm font-bold text-white/80 sm:block">موتورز</span>
+            <span className="hidden text-sm font-bold text-white/80 sm:block">{t('nav.motors')}</span>
           </a>
 
           <div className="hidden items-center gap-3 font-grotesk text-[11px] uppercase tracking-[0.3em] text-white/70 lg:flex" dir="ltr">
@@ -39,9 +41,18 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
 
           <div className="flex items-center gap-3">
             <button
+              onClick={toggle}
+              data-cursor={lang === 'ar' ? 'English' : 'عربي'}
+              aria-label={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
+              className="flex items-center gap-2 border border-white/40 px-3.5 py-2 text-sm font-bold text-white transition-colors hover:border-signal hover:text-signal"
+            >
+              <Languages size={15} />
+              <span className={lang === 'ar' ? 'font-grotesk text-[11px] uppercase tracking-[0.2em]' : 'text-[13px]'}>{lang === 'ar' ? 'EN' : 'عربي'}</span>
+            </button>
+            <button
               onClick={onToggleMode}
-              data-cursor={sport ? 'اطفي السبورت' : 'شغّل السبورت'}
-              aria-label={sport ? 'إيقاف وضع السبورت' : 'تفعيل وضع السبورت'}
+              data-cursor={sport ? t('nav.sportOff') : t('nav.sportOn')}
+              aria-label={sport ? t('nav.sportOff') : t('nav.sportOn')}
               aria-pressed={sport}
               className={`flex items-center gap-2 border px-4 py-2 text-sm font-bold transition-all duration-300 ${
                 sport
@@ -56,7 +67,7 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             <a
               href="tel:+201099687092"
               className="hidden items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black md:flex"
-              data-cursor="اتصل"
+              data-cursor={t('nav.call')}
             >
               <Phone size={15} />
               <span dir="ltr">+20 109 968 7091</span>
@@ -64,11 +75,11 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
             <button
               onClick={() => setOpen(true)}
               className="flex items-center gap-2 bg-white px-4 py-2 text-sm font-black text-black"
-              data-cursor="القايمة"
-              aria-label="فتح القائمة"
+              data-cursor={t('nav.menu')}
+              aria-label={t('nav.open')}
             >
               <Menu size={17} />
-              القايمة
+              {t('nav.menu')}
             </button>
           </div>
         </div>
@@ -90,9 +101,9 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
               <button
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 border border-line px-4 py-2 text-sm font-bold text-bone hover:border-signal hover:text-signal"
-                aria-label="إغلاق القائمة"
+                aria-label={t('nav.closeAria')}
               >
-                <X size={17} /> اقفل
+                <X size={17} /> {t('nav.close')}
               </button>
             </div>
 
@@ -106,19 +117,19 @@ export default function Navbar({ mode = 'normal', onToggleMode }) {
                     animate={{ y: 0 }}
                     transition={{ delay: 0.25 + i * 0.07, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="group flex items-center justify-between py-3 md:py-4"
-                    data-cursor="روح"
+                    data-cursor={t('nav.go')}
                   >
                     <span className="flex items-baseline gap-4">
                       <span className="font-grotesk text-xs text-signal" dir="ltr">
                         0{i + 1}
                       </span>
-                      <span className="text-4xl font-black text-bone transition-all duration-300 group-hover:-translate-x-2 group-hover:text-signal md:text-6xl">
-                        {l.ar}
+                      <span className={`text-4xl font-black text-bone transition-all duration-300 group-hover:text-signal md:text-6xl ${lang === 'ar' ? 'group-hover:-translate-x-2' : 'group-hover:translate-x-2'}`}>
+                        {lang === 'ar' ? l.ar : l.en}
                       </span>
                     </span>
                     <span className="flex items-center gap-3">
                       <span className="font-display text-lg tracking-widest text-dim" dir="ltr">
-                        {l.en}
+                        {lang === 'ar' ? l.en : l.ar}
                       </span>
                       <ArrowUpLeft className="text-dim transition-all duration-300 group-hover:-translate-y-1 group-hover:text-signal" />
                     </span>

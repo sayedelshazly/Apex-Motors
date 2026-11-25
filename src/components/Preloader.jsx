@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { BatteryCharging, CircleGauge, Fuel, TriangleAlert } from 'lucide-react';
+import { useLang } from '../i18n.jsx';
 
 /**
  * Preloader as a car dashboard: ignition self-test lights, a big RPM
@@ -8,6 +9,7 @@ import { BatteryCharging, CircleGauge, Fuel, TriangleAlert } from 'lucide-react'
  * and a final redline flash before the curtain lifts.
  */
 export default function Preloader({ onDone }) {
+  const { t } = useLang();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function Preloader({ onDone }) {
             <div className="font-display text-3xl leading-none text-[#f2f0ea] md:text-4xl">
               {kmh}<span className="ml-1 text-sm text-signal">KM/H</span>
             </div>
-            <div className="mt-1 font-ar text-sm text-[#9b978c]">بنجهّز الوحوش… دوسنا بنزين</div>
+            <div className="mt-1 font-ar text-sm text-[#9b978c]">{t('pre.line')}</div>
           </div>
         </div>
         <div className="h-[3px] w-full overflow-hidden bg-white/10" dir="ltr">
