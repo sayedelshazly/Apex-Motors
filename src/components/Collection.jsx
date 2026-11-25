@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpLeft, Gauge, Timer, X } from 'lucide-react';
 import { cars, categories } from '../data/cars';
 import { Reveal, SectionHeading } from './Reveal';
+import EngineStarter from './EngineStarter';
 
 function CarModal({ car, onClose }) {
   if (!car) return null;
@@ -48,6 +49,9 @@ function CarModal({ car, onClose }) {
             ))}
           </div>
           <p className="mt-4 font-grotesk text-sm text-dim" dir="ltr">{car.engine}</p>
+          <div className="mt-5">
+            <EngineStarter car={car} compact />
+          </div>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
             <div className="font-display text-3xl text-bone" dir="ltr">{car.price} <span className="text-base text-signal">EGP</span></div>
             <a href="#testdrive" onClick={onClose} className="rounded-full bg-signal px-7 py-3.5 font-black text-white transition-transform hover:scale-105">
