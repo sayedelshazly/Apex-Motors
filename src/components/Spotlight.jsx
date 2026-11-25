@@ -57,7 +57,7 @@ export default function Spotlight() {
               animate={{ x: 0, scale: 1, opacity: 1 }}
               exit={{ x: dir > 0 ? '-100%' : '100%', scale: 1.08, opacity: 0.6 }}
               transition={{ duration: 0.85, ease: [0.83, 0, 0.17, 1] }}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="car-idle absolute inset-0 h-full w-full object-cover"
             />
           </AnimatePresence>
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-void/85 to-transparent" />

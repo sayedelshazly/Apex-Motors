@@ -27,7 +27,7 @@ function CarModal({ car, onClose }) {
           <X size={18} />
         </button>
         <div className="relative aspect-[16/9] overflow-hidden">
-          <img src={car.img} alt={car.model} className="h-full w-full object-cover" />
+          <img src={car.img} alt={car.model} className="car-idle h-full w-full object-cover" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-carbon to-transparent" />
           {car.tag && <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">{car.tag}</span>}
         </div>

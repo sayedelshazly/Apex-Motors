@@ -17,6 +17,7 @@ import TestDrive from './components/TestDrive';
 import Footer from './components/Footer';
 import ScrollSpeedo from './components/ScrollSpeedo';
 import { playRev } from './lib/revSound';
+import { playClick } from './lib/clickSound';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,6 +63,16 @@ export default function App() {
       fxTimer.current = setTimeout(() => setSportFx(null), 800);
     }
   };
+
+  // SPORT mode: mechanical click sounds on every button/link press
+  useEffect(() => {
+    if (mode !== 'sport') return;
+    const onDown = (e) => {
+      if (e.target.closest('button, a')) playClick();
+    };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [mode]);
 
   // Lenis smooth scroll driven by GSAP's ticker (keeps ScrollTrigger in sync)
   useEffect(() => {

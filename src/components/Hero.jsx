@@ -54,7 +54,7 @@ export default function Hero({ started }) {
           initial={{ scale: 1.18 }}
           animate={started ? { scale: 1.02 } : {}}
           transition={{ duration: 7, ease: [0.22, 1, 0.36, 1] }}
-          className="h-[115%] w-full object-cover object-center"
+          className="car-idle h-[115%] w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-void/80 via-void/25 to-void" />
         <div className="absolute inset-0 bg-gradient-to-l from-void/70 via-transparent to-void/40" />
