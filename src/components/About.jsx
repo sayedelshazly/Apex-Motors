@@ -30,7 +30,7 @@ export default function About() {
         {/* parallax image */}
         <div ref={ref} className="relative aspect-[4/3] overflow-hidden" data-cursor={t('about.cursor')}>
           <motion.img
-            src="/cars/ferrari.jpg"
+            src="/cars/ferrari.webp"
             alt={t('about.imgAlt')}
             style={{ y, scale: 1.18 }}
             className="h-full w-full object-cover"

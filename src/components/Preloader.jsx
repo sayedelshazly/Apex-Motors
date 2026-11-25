@@ -16,14 +16,14 @@ export default function Preloader({ onDone }) {
   useEffect(() => {
     let v = 0;
     const id = setInterval(() => {
-      v += Math.floor(Math.random() * 9) + 3;
+      v += Math.floor(Math.random() * 10) + 5;
       if (v >= 100) {
         v = 100;
         clearInterval(id);
-        setTimeout(onDone, 520);
+        setTimeout(onDone, 380);
       }
       setCount(v);
-    }, 92);
+    }, 78);
     return () => clearInterval(id);
   }, [onDone]);
 

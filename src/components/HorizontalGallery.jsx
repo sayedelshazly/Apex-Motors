@@ -7,12 +7,12 @@ import { useLang } from '../i18n.jsx';
 gsap.registerPlugin(ScrollTrigger);
 
 const slides = [
-  { img: '/cars/ferrari.jpg', en: 'LaFerrari', ar: 'أسطورة هايبرد', capEn: 'Hybrid legend', stat: '963 HP' },
-  { img: '/cars/mclaren.jpg', en: '720S', ar: 'كاربون طاير', capEn: 'Flying carbon', stat: '341 KM/H' },
-  { img: '/cars/lamborghini.jpg', en: 'Huracán', ar: 'صوت يهز الشارع', capEn: 'A soundtrack that shakes the street', stat: '640 HP' },
-  { img: '/cars/amg-gtr.jpg', en: 'AMG GT R', ar: 'وحش الحلبة', capEn: 'Track beast', stat: '3.6 S' },
-  { img: '/cars/mustang.jpg', en: 'Mustang', ar: 'عضلات أمريكية', capEn: 'American muscle', stat: 'V8 5.0' },
-  { img: '/cars/camaro.jpg', en: 'Camaro SS', ar: 'روح متمردة', capEn: 'Rebel soul', stat: '455 HP' },
+  { img: '/cars/ferrari.webp', en: 'LaFerrari', ar: 'أسطورة هايبرد', capEn: 'Hybrid legend', stat: '963 HP' },
+  { img: '/cars/mclaren.webp', en: '720S', ar: 'كاربون طاير', capEn: 'Flying carbon', stat: '341 KM/H' },
+  { img: '/cars/lamborghini.webp', en: 'Huracán', ar: 'صوت يهز الشارع', capEn: 'A soundtrack that shakes the street', stat: '640 HP' },
+  { img: '/cars/amg-gtr.webp', en: 'AMG GT R', ar: 'وحش الحلبة', capEn: 'Track beast', stat: '3.6 S' },
+  { img: '/cars/mustang.webp', en: 'Mustang', ar: 'عضلات أمريكية', capEn: 'American muscle', stat: 'V8 5.0' },
+  { img: '/cars/camaro.webp', en: 'Camaro SS', ar: 'روح متمردة', capEn: 'Rebel soul', stat: '455 HP' },
 ];
 
 export default function HorizontalGallery() {

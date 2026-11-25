@@ -210,11 +210,15 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       }
 
       const ratio = Math.max(0, Math.min(1, s.rpm / redline));
-      if (needleRef.current) {
-        needleRef.current.style.transform = `rotate(${-90 + ratio * 180}deg)`;
-      }
-      if (readoutRef.current) {
-        readoutRef.current.textContent = Math.round(s.rpm).toLocaleString('en-US');
+      const shown = Math.round(s.rpm);
+      if (shown !== s._shown) {
+        s._shown = shown;
+        if (needleRef.current) {
+          needleRef.current.style.transform = `rotate(${-90 + ratio * 180}deg)`;
+        }
+        if (readoutRef.current) {
+          readoutRef.current.textContent = shown.toLocaleString('en-US');
+        }
       }
       if (wrapRef.current) {
         wrapRef.current.dataset.hot = ratio > 0.78 ? 'true' : 'false';
