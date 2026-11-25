@@ -12,6 +12,7 @@ import Marquee from './components/Marquee';
 import Spotlight from './components/Spotlight';
 import Collection from './components/Collection';
 import Compare from './components/Compare';
+import Hybrid from './components/Hybrid';
 import HorizontalGallery from './components/HorizontalGallery';
 import About from './components/About';
 import TestDrive from './components/TestDrive';
@@ -132,6 +133,7 @@ export default function App() {
         <HorizontalGallery />
         <Collection />
         <Compare />
+        <Hybrid />
         <Marquee dark />
         <About />
         <TestDrive />
