@@ -194,6 +194,17 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
         const rate = s.revHold ? (profile.ev ? 0.09 : 0.055) : 0.035;
         s.rpm += (target - s.rpm) * rate;
         if (!s.revHold && !profile.ev) s.rpm += Math.sin(t / 90) * 6; // idle wobble
+        s.spool = (s.spool ?? 0) + ((s.rpm / redline) - (s.spool ?? 0)) * 0.04; // turbo spool lags the revs
+      } else if (s.phase === 'stopping') {
+        s.rpm += (0 - s.rpm) * (profile.ev ? 0.06 : 0.036);
+        if (!profile.ev && s.rpm < 850 && s.rpm > 70) s.rpm += (Math.random() - 0.62) * 42; // dying stumble
+        s.spool = Math.max(0, (s.spool ?? 0) - 0.011); // turbo spins down slowly after key-off
+        if (s.rpm / redline < 0.012 && (!(profile.turbo || profile.supercharged) || (s.spool ?? 0) < 0.05)) {
+          s.phase = 'off';
+          setPhase('off');
+          killAudio();
+          onStateChange?.(false);
+        }
       } else {
         s.rpm += (0 - s.rpm) * 0.08;
       }
@@ -217,7 +228,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           a.osc1.frequency.setTargetAtTime(f, now, 0.03);
           a.osc2.frequency.setTargetAtTime(f * 2.02, now, 0.03);
           a.sub.frequency.setTargetAtTime(f / 2, now, 0.03);
-          const vol = s.phase === 'on' ? 0.05 + ratio * 0.14 : 0;
+          const vol = s.phase === 'on' || s.phase === 'stopping' ? 0.05 + ratio * 0.14 : 0;
           a.master.gain.setTargetAtTime(vol, now, 0.06);
         } else {
           const f = (s.rpm / 60) * (profile.cyl / 2) * 0.5; // firing fundamental
@@ -227,11 +238,20 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           a.filter.frequency.setTargetAtTime((380 + ratio * 1600) * profile.bright, now, 0.05);
           if (a.bp) a.bp.frequency.setTargetAtTime(250 + ratio * 900, now, 0.05);
           let vol = s.phase === 'cranking' ? 0.1 : 0.14 + ratio * 0.1;
+          if (s.phase === 'stopping') {
+            vol *= 0.35 + ratio * 0.75;
+            if (s.rpm < 900) vol *= 1 - 0.45 * Math.max(0, Math.sin(t / 110)) * Math.max(0.3, 1 - ratio * 3); // cough dips
+          }
           if (profile.lope && s.phase === 'on') {
             vol *= 1 + 0.13 * Math.sin((t / 1000) * (s.rpm / 60) * Math.PI) * (1 - ratio);
           }
           a.master.gain.setTargetAtTime(vol, now, 0.06);
           if (a.whistle) {
+            if (s.phase === 'stopping') {
+              const sp = s.spool ?? 0;
+              a.whistle.frequency.setTargetAtTime(300 + sp * sp * 2400, now, 0.08);
+              a.gWhistle.gain.setTargetAtTime(0.03 * (profile.supercharged ? (profile.scMul || 1) : (profile.whistleMul || 1)) * sp, now, 0.08);
+            } else {
             const wTarget = s.revHold && ratio > 0.2
               ? profile.spool
                 ? 300 + Math.pow(ratio, 1.35) * 3300
@@ -242,6 +262,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
               ? (profile.supercharged ? 0.055 * (profile.scMul || 1) : 0.032 * (profile.whistleMul || 1)) * ratio
               : 0;
             a.gWhistle.gain.setTargetAtTime(wGain, now, 0.07);
+            }
           }
         }
       }
@@ -280,7 +301,15 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       }
       onStateChange?.(true);
       if (navigator.vibrate) navigator.vibrate(60);
-    } else {
+    } else if (s.phase === 'on') {
+      // shutdown: the engine winds down, stumbles and dies — and a
+      // turbo keeps spooling down after the key is off
+      s.phase = 'stopping';
+      s.revHold = false;
+      setPhase('stopping');
+      setRevving(false);
+      if (navigator.vibrate) navigator.vibrate(25);
+    } else if (s.phase === 'cranking') {
       s.phase = 'off';
       s.revHold = false;
       setPhase('off');
@@ -369,7 +398,7 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
             <Power size={18} className={phase === 'cranking' ? 'animate-spin' : ''} />
             {phase === 'off'
               ? (profile.ev ? t('eng.startEv') : t('eng.start'))
-              : phase === 'cranking' ? t('eng.cranking') : t('eng.stop')}
+              : phase === 'cranking' ? t('eng.cranking') : phase === 'stopping' ? t('eng.stopping') : t('eng.stop')}
           </button>
 
           <button

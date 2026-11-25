@@ -103,6 +103,7 @@ const STR = {
   'eng.startEv': { ar: 'شغّل الكهربا', en: 'Power on' },
   'eng.cranking': { ar: 'بيدوّر…', en: 'Cranking…' },
   'eng.stop': { ar: 'بطّل', en: 'Kill it' },
+  'eng.stopping': { ar: 'بيفصل…', en: 'Shutting down…' },
   'eng.hold': { ar: 'دوس بنزين — امسك الزرار 🏁', en: 'Hold the throttle 🏁' },
   'eng.holdEv': { ar: 'دوس كهربا — امسك الزرار ⚡', en: 'Hold the power ⚡' },
   'eng.crankMsg': { ar: 'المارش شغال… ثواني ويدور', en: 'Cranking… almost there' },
