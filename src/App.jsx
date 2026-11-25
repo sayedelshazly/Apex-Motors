@@ -11,6 +11,7 @@ import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Spotlight from './components/Spotlight';
 import Collection from './components/Collection';
+import Compare from './components/Compare';
 import HorizontalGallery from './components/HorizontalGallery';
 import About from './components/About';
 import TestDrive from './components/TestDrive';
@@ -126,6 +127,7 @@ export default function App() {
         <Spotlight />
         <HorizontalGallery />
         <Collection />
+        <Compare />
         <Marquee dark />
         <About />
         <TestDrive />
