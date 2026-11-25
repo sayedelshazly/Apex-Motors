@@ -212,7 +212,7 @@ export default function Compare() {
                     <span className="font-grotesk text-sm text-bone/50" dir="ltr">{leftWins} — {rightWins}</span>
                   </p>
                   <a
-                    href={`https://wa.me/201099687092?text=${waText}`}
+                    href={`https://wa.me/201099687091?text=${waText}`}
                     target="_blank"
                     rel="noreferrer"
                     className="btn-primary mt-4 inline-flex items-center gap-2 px-6 py-3 text-sm font-bold"

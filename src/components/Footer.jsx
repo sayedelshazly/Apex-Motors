@@ -35,7 +35,7 @@ export default function Footer() {
             <a href="#testdrive" className="rounded-full bg-signal px-8 py-4 font-black text-white transition-transform hover:scale-105" data-cursor={t('ft.lets')}>
               {t('ft.book')}
             </a>
-            <a href="https://wa.me/201099687092" target="_blank" rel="noreferrer" className="rounded-full border border-line px-8 py-4 font-black text-bone transition-colors hover:border-signal hover:text-signal" data-cursor={t('ft.wa')}>
+            <a href="https://wa.me/201099687091" target="_blank" rel="noreferrer" className="rounded-full border border-line px-8 py-4 font-black text-bone transition-colors hover:border-signal hover:text-signal" data-cursor={t('ft.wa')}>
               {t('ft.wa')}
             </a>
           </div>
@@ -59,11 +59,11 @@ export default function Footer() {
             {t('ft.addr')}
           </span>
           <span className={pill} dir="ltr">
-            <a href="tel:+201099687092" className="flex items-center gap-2.5">
+            <a href="tel:+201099687091" className="flex items-center gap-2.5">
               <span className={chip}><Phone size={13} /></span>
-              <span className="font-grotesk tracking-wider text-bone/90">+20 109 968 7092</span>
+              <span className="font-grotesk tracking-wider text-bone/90">+20 109 968 7091</span>
             </a>
-            <button type="button" onClick={() => copy('phone', '+201099687092')} className={copyBtn} aria-label="copy phone">
+            <button type="button" onClick={() => copy('phone', '+201099687091')} className={copyBtn} aria-label="copy phone">
               {copied === 'phone' ? <Check size={13} className="text-signal" /> : <Copy size={13} />}
             </button>
           </span>
