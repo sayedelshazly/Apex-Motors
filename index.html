@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="أبيكس موتورز — معرض سيارات فاخرة ورياضية في مصر. بوجاتي، لامبورجيني، فيراري، مكلارين وأكتر، بتجربة بصرية من عالم تاني." />
     <title>APEX MOTORS | أبيكس موتورز — معرض السيارات الفاخرة</title>
+    <script>
+      // apply the saved theme before first paint (no flash of the wrong mode)
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('apex-theme') === 'light' ? 'light' : 'dark';
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpLeft, Menu, Moon, Phone, Sun, X } from 'lucide-react';
 
 const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
@@ -11,7 +11,7 @@ const links = [
   { ar: 'كلّمنا', en: 'CONTACT', href: '#contact' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,6 +36,15 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={onToggleTheme}
+              className="flex items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black"
+              data-cursor={theme === 'dark' ? 'نوّر الكشافات' : 'طفي النور'}
+              aria-label={theme === 'dark' ? 'التحول للوضع النهاري' : 'التحول للوضع الليلي'}
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+              <span className="hidden sm:inline">{theme === 'dark' ? 'نهاري' : 'ليلي'}</span>
+            </button>
             <a
               href="tel:+201099687092"
               className="hidden items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black md:flex"

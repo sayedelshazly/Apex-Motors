@@ -52,20 +52,24 @@ export default function TestDrive() {
 
       <div className="relative grid gap-10 lg:grid-cols-[1fr_1.2fr]">
         {/* car preview */}
-        <Reveal className="relative min-h-72 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={car.id}
-              src={car.img}
-              alt={car.model}
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-transparent" />
+        <Reveal className="relative min-h-72 overflow-hidden border border-line bg-gradient-to-b from-smoke/50 via-carbon to-void">
+          <span className="text-stroke-faint pointer-events-none absolute inset-x-0 top-4 select-none text-center font-display text-7xl leading-none" dir="ltr" aria-hidden>{car.brand}</span>
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-8 pt-8">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={car.id}
+                src={car.cut}
+                alt={car.model}
+                initial={{ opacity: 0, x: 60, scale: 0.96 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -60, scale: 0.96 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="max-h-[68%] w-auto max-w-full object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.45)]"
+                dir="ltr"
+              />
+            </AnimatePresence>
+            <div className="car-shadow -mt-2 h-9 w-[58%] rounded-[100%]" />
+          </div>
           <div className="absolute bottom-5 right-5">
             <p className="font-grotesk text-[11px] uppercase tracking-[0.3em] text-signal" dir="ltr">{car.brand}</p>
             <p className="mt-1 text-3xl font-black text-bone">{car.modelAr}</p>

@@ -217,6 +217,11 @@ export const cars = [
   },
 ];
 
+// Transparent-background cutouts (AI-removed, see scripts/make-cutouts.py)
+cars.forEach((c) => {
+  c.cut = c.img.replace('/cars/', '/cars/cut/').replace('.jpg', '.webp');
+});
+
 export const categories = [
   { id: 'all', ar: 'الكل' },
   { id: 'hyper', ar: 'هايبر' },

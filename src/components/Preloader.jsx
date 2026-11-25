@@ -20,11 +20,11 @@ export default function Preloader({ onDone }) {
 
   return (
     <motion.div
-      className="noise fixed inset-0 z-[300] flex flex-col justify-between overflow-hidden bg-void px-6 py-8 md:px-12"
+      className="noise fixed inset-0 z-[300] flex flex-col justify-between overflow-hidden bg-[#08080a] px-6 py-8 md:px-12"
       exit={{ y: '-100%' }}
       transition={{ duration: 0.9, ease: [0.83, 0, 0.17, 1] }}
     >
-      <div className="flex items-center justify-between font-grotesk text-xs uppercase tracking-[0.35em] text-dim">
+      <div className="flex items-center justify-between font-grotesk text-xs uppercase tracking-[0.35em] text-[#9b978c]">
         <span>APEX MOTORS</span>
         <span className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-signal animate-pulse-dot" />
@@ -33,18 +33,18 @@ export default function Preloader({ onDone }) {
       </div>
 
       <div className="flex items-end justify-between" dir="ltr">
-        <div className="font-display text-[26vw] leading-[0.8] text-bone md:text-[19rem]">
+        <div className="font-display text-[26vw] leading-[0.8] text-[#f2f0ea] md:text-[19rem]">
           {count}
           <span className="text-signal">%</span>
         </div>
       </div>
 
       <div>
-        <div className="mb-4 flex justify-between font-ar text-sm text-dim">
+        <div className="mb-4 flex justify-between font-ar text-sm text-[#9b978c]">
           <span>بنجهّز الوحوش…</span>
           <span className="font-grotesk" dir="ltr">EST. 2012 — CAIRO</span>
         </div>
-        <div className="h-[3px] w-full overflow-hidden bg-smoke" dir="ltr">
+        <div className="h-[3px] w-full overflow-hidden bg-white/10" dir="ltr">
           <div
             className="h-full bg-signal transition-[width] duration-150 ease-out"
             style={{ width: `${count}%` }}

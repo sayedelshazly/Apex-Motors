@@ -15,6 +15,40 @@
   --font-grotesk: "Space Grotesk", monospace;
 }
 
+/* ---------- Light "day garage" theme: same tokens, flipped values ---------- */
+html[data-theme="light"] {
+  --color-void: #f3f0e9;
+  --color-carbon: #fbf9f4;
+  --color-smoke: #e6e1d3;
+  --color-bone: #141417;
+  --color-dim: #6f6a5c;
+  --color-line: rgba(20, 20, 23, 0.14);
+}
+html[data-theme="light"] .text-stroke { -webkit-text-stroke-color: rgba(20, 20, 23, 0.55); }
+html[data-theme="light"] .text-stroke-faint { -webkit-text-stroke-color: rgba(20, 20, 23, 0.16); }
+html[data-theme="light"] .speed-stripes {
+  background-image: repeating-linear-gradient(-45deg, rgba(20,20,23,0.07) 0 2px, transparent 2px 14px);
+}
+/* smooth colour melt while switching themes */
+html.theming *, html.theming *::before, html.theming *::after {
+  transition: background-color 0.55s ease, color 0.55s ease, border-color 0.55s ease, fill 0.55s ease, stroke 0.55s ease !important;
+}
+
+/* ---------- Cutout car stage helpers ---------- */
+.car-shadow {
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 45%, transparent 70%);
+  filter: blur(6px);
+}
+html[data-theme="light"] .car-shadow {
+  background: radial-gradient(ellipse at center, rgba(30,25,15,0.35) 0%, rgba(30,25,15,0.16) 45%, transparent 70%);
+}
+.car-reflection {
+  transform: scaleY(-1);
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.35), transparent 55%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.35), transparent 55%);
+  opacity: 0.28;
+}
+
 html { scroll-behavior: auto; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

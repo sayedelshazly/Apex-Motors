@@ -26,9 +26,10 @@ function CarModal({ car, onClose }) {
         <button onClick={onClose} className="absolute left-4 top-4 z-10 flex h-10 w-10 items-center justify-center bg-void/70 text-bone backdrop-blur hover:bg-signal" aria-label="إغلاق">
           <X size={18} />
         </button>
-        <div className="relative aspect-[16/9] overflow-hidden">
-          <img src={car.img} alt={car.model} className="h-full w-full object-cover" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-carbon to-transparent" />
+        <div className="relative flex aspect-[16/9] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-smoke/70 via-carbon to-void px-8 pt-6">
+          <span className="text-stroke-faint pointer-events-none absolute inset-x-0 top-3 select-none text-center font-display text-6xl leading-none" dir="ltr" aria-hidden>{car.brand}</span>
+          <img src={car.cut} alt={car.model} className="relative max-h-[76%] w-auto max-w-full object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.4)]" dir="ltr" />
+          <div className="car-shadow -mt-2 h-8 w-[64%] rounded-[100%]" />
           {car.tag && <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">{car.tag}</span>}
         </div>
         <div className="px-6 pb-8 pt-2 md:px-10">
@@ -110,15 +111,17 @@ export default function Collection() {
               data-cursor="شوفها"
               onClick={() => setSelected(car)}
             >
-              <div className="relative aspect-[16/10] overflow-hidden">
+              <div className="relative flex aspect-[16/10] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-smoke/60 via-carbon to-carbon px-6 pt-5">
+                <span className="text-stroke-faint pointer-events-none absolute inset-x-0 top-2 select-none text-center font-display text-5xl leading-none" dir="ltr" aria-hidden>{car.brand}</span>
                 <img
-                  src={car.img}
-                  alt={`${car.brand} ${car.model}`}
+                  src={car.cut}
+                  alt={`${car.brand} ${car.model} — من غير خلفية`}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                  className="relative max-h-[74%] w-auto max-w-full object-contain drop-shadow-[0_18px_20px_rgba(0,0,0,0.4)] transition-transform duration-[1200ms] ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.06]"
+                  dir="ltr"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent" />
-                {car.tag && <span className="absolute right-3 top-3 bg-signal px-2.5 py-1 text-[11px] font-black text-white">{car.tag}</span>}
+                <div className="car-shadow -mt-1.5 h-7 w-[62%] rounded-[100%] transition-transform duration-[1200ms] group-hover:scale-90" />
+                {car.tag && <span className="absolute right-3 top-3 z-10 bg-signal px-2.5 py-1 text-[11px] font-black text-white">{car.tag}</span>}
                 <span className="absolute left-3 top-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                   <ArrowUpLeft size={17} />
                 </span>
