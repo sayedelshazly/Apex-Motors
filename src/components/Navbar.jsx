@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpLeft, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpLeft, Gauge, Menu, Phone, X } from 'lucide-react';
 
 const links = [
   { ar: 'الرئيسية', en: 'HOME', href: '#hero' },
@@ -11,7 +11,8 @@ const links = [
   { ar: 'كلّمنا', en: 'CONTACT', href: '#contact' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ mode = 'normal', onToggleMode }) {
+  const sport = mode === 'sport';
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,6 +37,21 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={onToggleMode}
+              data-cursor={sport ? 'اطفي السبورت' : 'شغّل السبورت'}
+              aria-label={sport ? 'إيقاف وضع السبورت' : 'تفعيل وضع السبورت'}
+              aria-pressed={sport}
+              className={`flex items-center gap-2 border px-4 py-2 text-sm font-bold transition-all duration-300 ${
+                sport
+                  ? 'border-signal bg-signal text-white shadow-[0_0_22px_rgba(255,30,0,0.55)]'
+                  : 'border-white/40 text-white hover:border-signal hover:text-signal'
+              }`}
+            >
+              <Gauge size={15} className={sport ? 'animate-pulse' : ''} />
+              <span className="hidden font-grotesk text-[11px] uppercase tracking-[0.2em] sm:inline" dir="ltr">Sport</span>
+              {sport && <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse-dot" />}
+            </button>
             <a
               href="tel:+201099687092"
               className="hidden items-center gap-2 border border-white/40 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-white hover:text-black md:flex"

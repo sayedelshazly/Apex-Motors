@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="الشاذلي موتورز — معرض سيارات فاخرة ورياضية في مصر. بوجاتي، لامبورجيني، فيراري، مكلارين وأكتر، بتجربة بصرية من عالم تاني." />
     <title>ELSHAZLY MOTORS | الشاذلي موتورز — معرض السيارات الفاخرة</title>
+    <script>
+      // restore SPORT mode before first paint
+      try {
+        if (localStorage.getItem('apex-mode') === 'sport') {
+          document.documentElement.dataset.mode = 'sport';
+        }
+      } catch (e) { /* private mode */ }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -21,6 +21,35 @@
   filter: blur(6px);
 }
 
+/* ---------- SPORT mode: hotter red, darker blacks, everything faster ---------- */
+html[data-mode="sport"] {
+  --color-void: #070405;
+  --color-carbon: #0e0608;
+  --color-smoke: #1c0b0e;
+  --color-signal: #ff1e00;
+  --color-line: rgba(255, 90, 60, 0.17);
+}
+html[data-mode="sport"] .animate-marquee { animation-duration: 13s; }
+html[data-mode="sport"] button.bg-signal,
+html[data-mode="sport"] a.bg-signal {
+  box-shadow: 0 0 28px rgba(255, 30, 0, 0.5);
+}
+.sport-glow {
+  background:
+    radial-gradient(120% 55% at 50% 0%, rgba(255, 30, 0, 0.12), transparent 60%),
+    radial-gradient(120% 55% at 50% 100%, rgba(255, 30, 0, 0.14), transparent 60%);
+  animation: sportpulse 2.6s ease-in-out infinite;
+}
+@keyframes sportpulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.sport-shake { animation: sportshake 0.45s linear; }
+@keyframes sportshake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(1.5px, -1px); }
+  40% { transform: translate(-1.5px, 1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(-1px, -1px); }
+}
+
 /* ---------- Mobile feel ---------- */
 * { -webkit-tap-highlight-color: transparent; }
 button, a { touch-action: manipulation; }
