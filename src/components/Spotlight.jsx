@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Gauge, Timer, Wind } from 'lucide-react';
 import { heroCars } from '../data/cars';
 import { SectionHeading } from './Reveal';
+import EngineStarter from './EngineStarter';
 
 function Counter({ value, active }) {
   const [n, setN] = useState(0);
@@ -24,14 +25,17 @@ function Counter({ value, active }) {
 
 export default function Spotlight() {
   const [[idx, dir], setIdx] = useState([0, 1]);
+  const [engineOn, setEngineOn] = useState(false);
   const car = heroCars[idx];
 
   const go = (d) => setIdx(([i]) => [(i + d + heroCars.length) % heroCars.length, d]);
 
+  // auto-rotate pauses while the engine is running — the beast has your attention
   useEffect(() => {
+    if (engineOn) return;
     const id = setInterval(() => go(1), 6500);
     return () => clearInterval(id);
-  }, [idx]);
+  }, [idx, engineOn]);
 
   return (
     <section id="spotlight" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
@@ -117,6 +121,10 @@ export default function Spotlight() {
                 <a href="#testdrive" className="rounded-full bg-signal px-7 py-3.5 font-black text-white transition-transform hover:scale-105" data-cursor="احجز">
                   احجز تجربة قيادة
                 </a>
+              </div>
+
+              <div className="mt-6">
+                <EngineStarter car={car} onStateChange={setEngineOn} />
               </div>
             </motion.div>
           </AnimatePresence>

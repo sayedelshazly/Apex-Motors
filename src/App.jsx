@@ -15,6 +15,7 @@ import HorizontalGallery from './components/HorizontalGallery';
 import About from './components/About';
 import TestDrive from './components/TestDrive';
 import Footer from './components/Footer';
+import ScrollSpeedo from './components/ScrollSpeedo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,6 +61,7 @@ export default function App() {
       </AnimatePresence>
 
       <Cursor />
+      <ScrollSpeedo />
       <Navbar />
 
       <main>
