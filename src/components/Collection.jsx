@@ -100,7 +100,7 @@ export default function Collection() {
       </Reveal>
 
       {/* grid */}
-      <motion.div layout className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <motion.div layout className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-5">
         <AnimatePresence mode="popLayout">
           {list.map((car) => (
             <motion.article
@@ -122,24 +122,24 @@ export default function Collection() {
                   className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent" />
-                {carTag(car, lang) && <span className="absolute right-3 top-3 bg-signal px-2.5 py-1 text-[11px] font-black text-white">{carTag(car, lang)}</span>}
-                {car.id === 'supra' && <span className="absolute bottom-3 right-3 bg-amber-400 px-2.5 py-1 text-[11px] font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)]">{t('coll.legend')}</span>}
-                <span className="absolute left-3 top-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                {carTag(car, lang) && <span className="absolute right-1.5 top-1.5 bg-signal px-1.5 py-0.5 text-[8px] font-black text-white md:right-3 md:top-3 md:px-2.5 md:py-1 md:text-[11px]">{carTag(car, lang)}</span>}
+                {car.id === 'supra' && <span className="absolute bottom-1.5 right-1.5 bg-amber-400 px-1.5 py-0.5 text-[8px] font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)] md:bottom-3 md:right-3 md:px-2.5 md:py-1 md:text-[11px]">{t('coll.legend')}</span>}
+                <span className="absolute left-3 top-3 hidden h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:flex">
                   <ArrowUpLeft size={17} />
                 </span>
               </div>
-              <div className="p-5">
+              <div className="p-2.5 md:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="font-grotesk text-[10px] uppercase tracking-[0.3em] text-signal" dir="ltr">{car.brand}</p>
-                    <h3 className="mt-1.5 text-xl font-black text-bone">{lang === 'ar' ? car.modelAr : car.model}</h3>
+                    <p className="font-grotesk text-[8px] uppercase tracking-[0.18em] text-signal md:text-[10px] md:tracking-[0.3em]" dir="ltr">{car.brand}</p>
+                    <h3 className="mt-1 text-[12px] font-black leading-snug text-bone md:mt-1.5 md:text-xl">{lang === 'ar' ? car.modelAr : car.model}</h3>
                   </div>
-                  <span className="border border-line px-2 py-1 font-grotesk text-xs text-dim" dir="ltr">{car.year}</span>
+                  <span className="hidden border border-line px-2 py-1 font-grotesk text-xs text-dim md:block" dir="ltr">{car.year}</span>
                 </div>
-                <div className="mt-4 flex items-center gap-5 border-t border-line pt-4 text-sm text-dim" dir="ltr">
-                  <span className="flex items-center gap-1.5"><Gauge size={15} className="text-signal" />{car.hp} HP</span>
-                  <span className="flex items-center gap-1.5"><Timer size={15} className="text-signal" />{car.accel.toFixed(1)}s</span>
-                  <span className="mr-auto font-display text-lg text-bone">{car.price} <span className="text-[11px] text-signal">EGP</span></span>
+                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-2 text-[10px] text-dim md:mt-4 md:gap-5 md:pt-4 md:text-sm" dir="ltr">
+                  <span className="flex items-center gap-1 md:gap-1.5"><Gauge size={15} className="h-3 w-3 text-signal md:h-[15px] md:w-[15px]" />{car.hp} HP</span>
+                  <span className="flex items-center gap-1 md:gap-1.5"><Timer size={15} className="h-3 w-3 text-signal md:h-[15px] md:w-[15px]" />{car.accel.toFixed(1)}s</span>
+                  <span className="font-display text-[11px] text-bone max-md:w-full md:mr-auto md:text-lg">{car.price} <span className="text-[8px] text-signal md:text-[11px]">EGP</span></span>
                 </div>
               </div>
               <span className="absolute inset-x-0 bottom-0 h-[3px] origin-right scale-x-0 bg-signal transition-transform duration-500 group-hover:scale-x-100" />

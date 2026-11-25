@@ -143,7 +143,7 @@ export default function Hybrid() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.3 }}
-                  className="font-display text-5xl uppercase leading-none text-white md:text-6xl"
+                  className="font-display text-4xl uppercase leading-[0.95] text-white sm:text-5xl md:text-6xl"
                   dir="ltr"
                 >
                   {beast.name}

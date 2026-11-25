@@ -46,7 +46,7 @@ export default function ScrollSpeedo() {
   return (
     <div
       dir="ltr"
-      className="fixed bottom-4 left-4 z-[120] w-[116px] origin-bottom-left [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.7))] max-sm:scale-[0.85]"
+      className="fixed bottom-4 left-4 z-[120] w-[116px] origin-bottom-left [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.7))] max-sm:scale-[0.6]"
       aria-hidden
     >
       <svg viewBox="0 0 160 100" className="w-full">
