@@ -1,10 +1,22 @@
-import { ArrowUp, AtSign, MapPin, Phone } from 'lucide-react';
+import { useState } from 'react';
+import { AtSign, Check, Copy, MapPin, Phone } from 'lucide-react';
 import { Reveal } from './Reveal';
 import { useLang } from '../i18n.jsx';
 import Logo from './Logo';
 
 export default function Footer() {
   const { t } = useLang();
+  const [copied, setCopied] = useState('');
+  const copy = async (key, value) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(key);
+      setTimeout(() => setCopied(''), 1500);
+    } catch { /* clipboard unavailable — the link itself still works */ }
+  };
+  const pill = 'group inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-white/[0.03] py-1.5 pe-2 ps-1.5 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-signal/70';
+  const chip = 'flex h-7 w-7 items-center justify-center rounded-full bg-signal/15 text-signal transition-colors duration-300 group-hover:bg-signal group-hover:text-white';
+  const copyBtn = 'flex h-7 w-7 items-center justify-center rounded-full text-dim transition-colors hover:bg-white/10 hover:text-bone';
   return (
     <footer id="contact" className="relative overflow-hidden">
       {/* CTA */}
@@ -46,19 +58,24 @@ export default function Footer() {
             <MapPin size={15} className="text-signal" />
             {t('ft.addr')}
           </span>
-          <a href="tel:+201099687092" className="flex items-center gap-2 hover:text-bone" dir="ltr">
-            <Phone size={15} className="text-signal" /> +20 109 968 7092
-          </a>
-          <a href="#hero" className="flex items-center gap-2 hover:text-bone" dir="ltr">
-            <AtSign size={15} className="text-signal" /> elshazlymotors.eg
-          </a>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center gap-2 font-bold text-bone hover:text-signal"
-            data-cursor={t('ft.top')}
-          >
-            {t('ft.top')} <ArrowUp size={16} />
-          </button>
+          <span className={pill} dir="ltr">
+            <a href="tel:+201099687092" className="flex items-center gap-2.5">
+              <span className={chip}><Phone size={13} /></span>
+              <span className="font-grotesk tracking-wider text-bone/90">+20 109 968 7092</span>
+            </a>
+            <button type="button" onClick={() => copy('phone', '+201099687092')} className={copyBtn} aria-label="copy phone">
+              {copied === 'phone' ? <Check size={13} className="text-signal" /> : <Copy size={13} />}
+            </button>
+          </span>
+          <span className={pill} dir="ltr">
+            <a href="https://instagram.com/elshazlymotors.eg" target="_blank" rel="noreferrer" className="flex items-center gap-2.5">
+              <span className={chip}><AtSign size={13} /></span>
+              <span className="font-grotesk tracking-wider text-bone/90">elshazlymotors.eg</span>
+            </a>
+            <button type="button" onClick={() => copy('mail', 'elshazlymotors.eg')} className={copyBtn} aria-label="copy handle">
+              {copied === 'mail' ? <Check size={13} className="text-signal" /> : <Copy size={13} />}
+            </button>
+          </span>
         </div>
         <p className="mt-6 text-center font-grotesk text-[11px] uppercase tracking-[0.3em] text-dim/70" dir="ltr">
           © 2026 Apex Motors — Not just browsing cars. Experiencing speed.
