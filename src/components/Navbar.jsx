@@ -42,7 +42,7 @@ export default function Navbar() {
               data-cursor="اتصل"
             >
               <Phone size={15} />
-              <span dir="ltr">+20 109 968 7092</span>
+              <span dir="ltr">+20 109 968 7091</span>
             </a>
             <button
               onClick={() => setOpen(true)}
