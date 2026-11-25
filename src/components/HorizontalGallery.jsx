@@ -1,0 +1,84 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MoveLeft } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const slides = [
+  { img: '/cars/ferrari.jpg', en: 'LaFerrari', ar: 'أسطورة هايبرد', stat: '963 HP' },
+  { img: '/cars/mclaren.jpg', en: '720S', ar: 'كاربون طاير', stat: '341 KM/H' },
+  { img: '/cars/lamborghini.jpg', en: 'Huracán', ar: 'صوت يهز الشارع', stat: '640 HP' },
+  { img: '/cars/amg-gtr.jpg', en: 'AMG GT R', ar: 'وحش الحلبة', stat: '3.6 S' },
+  { img: '/cars/mustang.jpg', en: 'Mustang', ar: 'عضلات أمريكية', stat: 'V8 5.0' },
+  { img: '/cars/camaro.jpg', en: 'Camaro SS', ar: 'روح متمردة', stat: '455 HP' },
+];
+
+export default function HorizontalGallery() {
+  const wrapRef = useRef(null);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      const getAmount = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      gsap.to(track, {
+        x: () => getAmount(), // RTL page: content flows right→left, so we push +x
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrapRef.current,
+          start: 'top top',
+          end: () => `+=${getAmount()}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+    }, wrapRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="gallery" ref={wrapRef} className="relative overflow-hidden bg-carbon">
+      <div className="flex items-center justify-between px-6 pt-14 md:px-12">
+        <h2 className="flex items-center gap-3 text-2xl font-black text-bone md:text-4xl">
+          الجاليري
+          <span className="font-display text-lg tracking-widest text-dim" dir="ltr">GALLERY</span>
+        </h2>
+        <span className="flex items-center gap-2 text-sm font-bold text-signal">
+          كمّل سكرول
+          <MoveLeft className="animate-pulse" size={18} />
+        </span>
+      </div>
+
+      <div ref={trackRef} className="flex w-max items-stretch gap-6 px-6 py-12 md:px-12" dir="rtl">
+        {slides.map((s, i) => (
+          <article key={s.en} className="group relative w-[78vw] shrink-0 overflow-hidden sm:w-[52vw] lg:w-[38vw]" data-cursor={s.en}>
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <img src={s.img} alt={s.en} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] group-hover:scale-108" />
+              <div className="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent" />
+              <span className="text-stroke absolute right-4 top-2 font-display text-6xl md:text-7xl" dir="ltr">0{i + 1}</span>
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                <div>
+                  <h3 className="font-display text-3xl tracking-wide text-bone md:text-4xl" dir="ltr">{s.en}</h3>
+                  <p className="mt-1 font-bold text-bone/75">{s.ar}</p>
+                </div>
+                <span className="bg-signal px-3 py-1.5 font-grotesk text-sm font-bold text-white" dir="ltr">{s.stat}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+
+        {/* end card */}
+        <div className="speed-stripes flex w-[60vw] shrink-0 flex-col items-center justify-center gap-4 border border-line sm:w-[36vw]">
+          <p className="font-display text-4xl text-bone md:text-5xl" dir="ltr">YOUR TURN</p>
+          <p className="font-bold text-dim">دورك تركب</p>
+          <a href="#testdrive" className="rounded-full bg-bone px-6 py-3 font-black text-void transition-colors hover:bg-signal hover:text-white" data-cursor="احجز">
+            احجز تجربة قيادة
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
