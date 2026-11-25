@@ -38,11 +38,11 @@ export default function App() {
       setTheme(to);
       document.documentElement.dataset.theme = to;
       try { localStorage.setItem('apex-theme', to); } catch { /* private mode */ }
-    }, 300));
-    timers.current.push(setTimeout(() => setFlash(null), 1150));
+    }, 720));
+    timers.current.push(setTimeout(() => setFlash(null), 2050));
     timers.current.push(setTimeout(() => {
       document.documentElement.classList.remove('theming');
-    }, 1300));
+    }, 2300));
   };
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);

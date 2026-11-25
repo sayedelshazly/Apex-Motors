@@ -40,55 +40,30 @@ function SpecCard({ className, icon: Icon, value, unit, label, delay }) {
 export default function Hero({ started }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const carY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '22%']);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '65%']);
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <section id="hero" ref={ref} className="noise relative flex min-h-svh flex-col overflow-hidden">
-      {/* garage backdrop: glow + light strips + floor */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-smoke/60 via-void to-void" />
-        <div className="absolute left-1/2 top-[6%] h-[46vh] w-[86vw] -translate-x-1/2 rounded-[100%] bg-signal/15 blur-[110px]" />
-        <div className="absolute inset-x-0 top-24 flex justify-center gap-3 opacity-25" dir="ltr" aria-hidden>
-          {Array.from({ length: 9 }).map((_, i) => (
-            <span key={i} className="h-24 w-10 -skew-x-12 bg-gradient-to-b from-bone/50 to-transparent blur-[3px] md:h-32" />
-          ))}
-        </div>
-        <span className="text-stroke-faint absolute inset-x-0 top-[13%] select-none text-center font-display text-[24vw] leading-none" dir="ltr" aria-hidden>
-          CHIRON
-        </span>
-        <div className="speed-stripes absolute inset-x-0 bottom-0 h-40 opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" />
-      </div>
-
-      {/* the beast itself — cutout, no background */}
-      <motion.div style={{ y: carY }} className="pointer-events-none absolute inset-x-0 top-[15%] z-[6] flex flex-col items-center md:top-[11%]">
+      {/* car backdrop — slow cinematic dolly-in + scroll parallax */}
+      <motion.div style={{ y: imgY }} className="absolute inset-0">
         <motion.img
-          src="/cars/cut/bugatti.webp"
-          alt="Bugatti Chiron — من غير خلفية"
-          initial={{ scale: 1.22, opacity: 0 }}
-          animate={started ? { scale: 1, opacity: 1 } : {}}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          className="w-[min(880px,94vw)] drop-shadow-[0_35px_45px_rgba(0,0,0,0.45)]"
-          dir="ltr"
+          src="/cars/bugatti.jpg"
+          alt="Bugatti Chiron"
+          initial={{ scale: 1.18 }}
+          animate={started ? { scale: 1.02 } : {}}
+          transition={{ duration: 7, ease: [0.22, 1, 0.36, 1] }}
+          className="h-[115%] w-full object-cover object-center"
         />
-        <div className="car-shadow -mt-[4.5%] h-14 w-[62%] rounded-[100%]" />
-        <motion.img
-          src="/cars/cut/bugatti.webp"
-          alt=""
-          aria-hidden
-          initial={{ opacity: 0 }}
-          animate={started ? { opacity: 1 } : {}}
-          transition={{ duration: 1.6, delay: 0.3 }}
-          className="car-reflection -mt-[7%] w-[min(880px,94vw)]"
-          dir="ltr"
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-void/80 via-void/25 to-void" />
+        <div className="absolute inset-0 bg-gradient-to-l from-void/70 via-transparent to-void/40" />
       </motion.div>
 
-      {/* floating spec cards */}
+      {/* floating spec cards — زي مرجع إنستجرام */}
       <SpecCard className="right-[6%] top-[30%] hidden md:block" icon={Gauge} value="1600" unit="HP" label="Horsepower" delay={1.1} />
-      <SpecCard className="left-[5%] top-[46%] hidden md:block" icon={Timer} value="2.4" unit="SEC" label="0—100 KM/H" delay={1.3} />
-      <SpecCard className="bottom-[30%] right-[9%] hidden lg:block" icon={Wind} value="440" unit="KM/H" label="Top Speed" delay={1.5} />
+      <SpecCard className="left-[5%] top-[52%] hidden md:block" icon={Timer} value="2.4" unit="SEC" label="0—100 KM/H" delay={1.3} />
+      <SpecCard className="bottom-[24%] right-[10%] hidden lg:block" icon={Wind} value="440" unit="KM/H" label="Top Speed" delay={1.5} />
 
       {/* headline */}
       <motion.div style={{ y: textY, opacity: fade }} className="relative z-10 flex flex-1 flex-col justify-end px-6 pb-10 pt-32 md:px-12">

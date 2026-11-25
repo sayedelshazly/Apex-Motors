@@ -46,32 +46,23 @@ export default function Spotlight() {
       <SectionHeading tag="Spotlight — Car of the week" ar="نجم الأسبوع" en="SPOTLIGHT" />
 
       <div className="relative grid items-center gap-10 lg:grid-cols-[1.5fr_1fr]">
-        {/* cutout stage — the car floats on a lit podium */}
-        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-gradient-to-b from-smoke/70 via-carbon to-void max-lg:-order-1" data-cursor="الوحش">
-          <span className="text-stroke-faint pointer-events-none absolute inset-x-0 top-6 select-none text-center font-display text-[7.5rem] leading-none md:text-[10rem]" dir="ltr" aria-hidden>
-            {car.brand}
-          </span>
-          <div className="absolute left-1/2 top-1/2 h-56 w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-[100%] bg-signal/15 blur-[80px]" />
+        {/* image stage */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-carbon max-lg:-order-1" data-cursor="الوحش">
           <AnimatePresence custom={dir} mode="popLayout">
-            <motion.div
+            <motion.img
               key={car.id}
-              initial={{ x: dir > 0 ? '55%' : '-55%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: dir > 0 ? '-55%' : '55%', opacity: 0 }}
+              src={car.img}
+              alt={`${car.brand} ${car.model}`}
+              initial={{ x: dir > 0 ? '100%' : '-100%', scale: 1.12, opacity: 0.6 }}
+              animate={{ x: 0, scale: 1, opacity: 1 }}
+              exit={{ x: dir > 0 ? '-100%' : '100%', scale: 1.08, opacity: 0.6 }}
               transition={{ duration: 0.85, ease: [0.83, 0, 0.17, 1] }}
-              className="absolute inset-0 flex flex-col items-center justify-center px-8 pt-10"
-            >
-              <img
-                src={car.cut}
-                alt={`${car.brand} ${car.model} — من غير خلفية`}
-                className="max-h-[74%] w-auto max-w-full object-contain drop-shadow-[0_25px_30px_rgba(0,0,0,0.4)]"
-                dir="ltr"
-              />
-              <div className="car-shadow -mt-3 h-10 w-[68%] rounded-[100%]" />
-            </motion.div>
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </AnimatePresence>
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-void/85 to-transparent" />
           {car.tag && (
-            <span className="absolute right-4 top-4 z-10 bg-signal px-3 py-1.5 text-xs font-black text-white">
+            <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">
               {car.tag}
             </span>
           )}

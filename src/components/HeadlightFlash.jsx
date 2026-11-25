@@ -11,15 +11,15 @@ export default function HeadlightFlash({ to }) {
     <motion.div
       className="pointer-events-none fixed inset-0 z-[240] overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.25 } }}
+      exit={{ opacity: 0, transition: { duration: 0.5, ease: 'easeInOut' } }}
       aria-hidden
     >
       {/* wash */}
       <motion.div
         className={`absolute inset-0 ${warm ? 'bg-[#fff6df]' : 'bg-black'}`}
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, warm ? 0.9 : 0.75, 0] }}
-        transition={{ duration: 1.05, times: [0, 0.32, 1], ease: 'easeInOut' }}
+        animate={{ opacity: [0, warm ? 0.85 : 0.7, 0] }}
+        transition={{ duration: 1.9, times: [0, 0.38, 1], ease: 'easeInOut' }}
       />
       {/* left beam */}
       <motion.div
@@ -31,7 +31,7 @@ export default function HeadlightFlash({ to }) {
         }}
         initial={{ scaleY: 0, opacity: 0, rotate: -7 }}
         animate={{ scaleY: [0, 1, 1], opacity: [0, 1, 0], rotate: [-7, 0, 0] }}
-        transition={{ duration: 1.05, times: [0, 0.35, 1], ease: 'easeOut' }}
+        transition={{ duration: 1.9, times: [0, 0.45, 1], ease: [0.22, 1, 0.36, 1] }}
       />
       {/* right beam */}
       <motion.div
@@ -43,7 +43,7 @@ export default function HeadlightFlash({ to }) {
         }}
         initial={{ scaleY: 0, opacity: 0, rotate: 7 }}
         animate={{ scaleY: [0, 1, 1], opacity: [0, 1, 0], rotate: [7, 0, 0] }}
-        transition={{ duration: 1.05, times: [0, 0.35, 1], ease: 'easeOut' }}
+        transition={{ duration: 1.9, times: [0, 0.45, 1], ease: [0.22, 1, 0.36, 1] }}
       />
       {/* headlight glows */}
       {[8, 92].map((left) => (
@@ -53,7 +53,7 @@ export default function HeadlightFlash({ to }) {
           style={{ left: `${left}%` }}
           initial={{ opacity: 0, scale: 0.4 }}
           animate={{ opacity: [0, 0.95, 0], scale: [0.4, 1.25, 1.4] }}
-          transition={{ duration: 1.05, times: [0, 0.3, 1] }}
+          transition={{ duration: 1.9, times: [0, 0.38, 1], ease: 'easeInOut' }}
         />
       ))}
     </motion.div>
