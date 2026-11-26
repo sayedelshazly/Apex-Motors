@@ -14,13 +14,13 @@ export default function Footer() {
       setTimeout(() => setCopied(''), 1500);
     } catch { /* clipboard unavailable — the link itself still works */ }
   };
-  const pill = 'group inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-white/[0.03] py-1.5 pe-2 ps-1.5 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-signal/70';
+  const pill = 'group inline-flex items-center gap-2.5 rounded-full border border-line/70 bg-white/[0.03] py-1.5 pe-2 ps-1.5 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-signal/70 max-md:w-full max-md:max-w-[330px] max-md:justify-between';
   const chip = 'flex h-7 w-7 items-center justify-center rounded-full bg-signal/15 text-signal transition-colors duration-300 group-hover:bg-signal group-hover:text-white';
   const copyBtn = 'flex h-7 w-7 items-center justify-center rounded-full text-dim transition-colors hover:bg-white/10 hover:text-bone';
   return (
     <footer id="contact" className="relative overflow-hidden">
       {/* CTA */}
-      <div className="px-6 py-24 text-center md:px-12 md:py-32">
+      <div className="px-6 py-16 text-center md:px-12 md:py-32">
         <Reveal>
           <p className="font-grotesk text-[11px] uppercase tracking-[0.35em] text-signal" dir="ltr">Have a beast in mind?</p>
           <h2 className="mx-auto mt-5 max-w-4xl text-5xl font-black leading-[1.1] text-bone md:text-7xl">
@@ -47,14 +47,14 @@ export default function Footer() {
         <Logo className="h-14 w-14 text-bone" />
       </div>
       <div className="select-none px-2" dir="ltr" aria-hidden>
-        <div className="text-stroke-faint whitespace-nowrap text-center font-display text-[16.5vw] leading-[0.78]">
+        <div className="text-stroke-faint whitespace-nowrap text-center font-display text-[13.8vw] leading-[0.78] md:text-[16.5vw]">
           ELSHAZLY
         </div>
       </div>
 
       <div className="border-t border-line px-6 py-8 md:px-12">
-        <div className="flex flex-wrap items-center justify-between gap-5 text-sm text-dim">
-          <span className="flex items-center gap-2">
+        <div className="flex flex-col items-center gap-3.5 text-sm text-dim md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-5">
+          <span className="flex items-center justify-center gap-2 text-center">
             <MapPin size={15} className="text-signal" />
             {t('ft.addr')}
           </span>
@@ -77,7 +77,7 @@ export default function Footer() {
             </button>
           </span>
         </div>
-        <p className="mt-6 text-center font-grotesk text-[11px] uppercase tracking-[0.3em] text-dim/70" dir="ltr">
+        <p className="mt-6 px-10 text-center font-grotesk text-[11px] uppercase leading-relaxed tracking-[0.18em] text-dim/70 md:px-0 md:tracking-[0.3em]" dir="ltr">
           © 2026 Apex Motors — Not just browsing cars. Experiencing speed.
         </p>
       </div>

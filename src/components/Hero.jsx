@@ -51,7 +51,7 @@ export default function Hero({ started }) {
       {/* car backdrop — slow cinematic dolly-in + scroll parallax */}
       <motion.div style={{ y: imgY }} className="absolute inset-0">
         <motion.img
-          src="/cars/bugatti.webp"
+          src="/cars/bugatti-hero.webp"
           alt="Bugatti Chiron"
           initial={{ scale: 1.18 }}
           animate={started ? { scale: 1.02 } : {}}
