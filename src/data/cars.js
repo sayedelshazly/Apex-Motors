@@ -85,7 +85,7 @@ export const cars = [
     brandAr: 'مرسيدس AMG',
     model: 'AMG GT R',
     modelAr: 'جي تي آر',
-    img: '/cars/amg-gtr.webp',
+    img: '/cars/amg-gtr.png',
     price: '13,750,000',
     year: 2023,
     hp: 585,
