@@ -6,7 +6,7 @@ import { useLang } from '../i18n.jsx';
  * Interactive engine starter with a PER-CAR synthesized voice.
  * The sound character is derived from the car's real engine:
  * cylinders set the firing frequency, V10/V12/flat-plane run brighter,
- * muscle V8s lope at idle, turbo cars whistle under boost and blow off
+ * muscle V8s lope at idle, exhausts crackle on lift-off, turbo cars whistle under boost and blow off
  * when you lift, superchargers whine, and the EV hums and sings.
  * All synthesized live with Web Audio — no audio files.
  */
@@ -14,34 +14,38 @@ const REDLINES = { hyper: 8500, super: 8200, sport: 7500, muscle: 6800, electric
 const REDLINE_OVERRIDES = { corvette: 8600, challenger: 6200, supra: 6800 };
 const IDLE = 950;
 
-/* Hand-tuned signature per car: how its voice differs from the family
-   profile — whistle/bov loudness, sub-bass weight, brightness, detune,
-   and the Supra's laggy turbo spool. sig = the note shown to visitors. */
-const SIGNATURES = {
-  chiron:      { subMul: 1.5, whistleMul: 1.15, brightMul: 0.9, sig: { ar: 'هدير W16 بأربعة تيربو — قوة هادية ومرعبة', en: 'W16 quad-turbo rumble — calm, terrifying power' } },
-  huracan:     { brightMul: 1.3, sig: { ar: 'صرخة V10 إيطالية لحد آخر نفس', en: 'Italian V10 scream to the last breath' } },
-  '720s':      { whistleMul: 1.2, brightMul: 1.1, sig: { ar: 'توين تيربو بريطاني حاد كالموس', en: 'British twin-turbo, sharp as a razor' } },
-  laferrari:   { brightMul: 1.3, sig: { ar: 'أوبرا V12 من مارانيلو', en: 'A V12 opera from Maranello' } },
-  'amg-gtr':   { subMul: 1.3, sig: { ar: 'زئير AMG العميق من الجحيم الأخضر', en: 'Deep AMG growl from the Green Hell' } },
-  m5:          { whistleMul: 1.1, subMul: 1.15, sig: { ar: 'V8 ألماني منضبط… لحد ما تدوس', en: 'Disciplined German V8 — until you floor it' } },
-  panamera:    { brightMul: 0.95, subMul: 1.1, sig: { ar: 'فخامة هادية بصوت V8 واثق', en: 'Quiet luxury, confident V8 voice' } },
-  mustang:     { subMul: 1.35, sig: { ar: 'لوب الكويوتي الأمريكاني الأصلي', en: 'Original American Coyote lope' } },
-  camaro:      { subMul: 1.3, sig: { ar: 'LT1 — عضلات خام من غير فلاتر', en: 'LT1 — raw muscle, no filters' } },
-  m440i:       { whistleMul: 1.25, sig: { ar: 'ستة سلندر B58 بصافرة تيربو ناعمة', en: 'B58 straight-six with a smooth turbo whistle' } },
-  'amg-gt':    { subMul: 1.3, brightMul: 1.05, sig: { ar: 'بيتوربو بيتنفس تقيل وبيزأر', en: 'Biturbo breathing heavy, roaring' } },
-  m4:          { whistleMul: 1.3, detune: 6, sig: { ar: 'S58 توين تيربو شرّاس ومتعصب', en: 'S58 twin-turbo — angry and proud' } },
-  gtr:         { whistleMul: 1.6, bovMul: 1.7, sig: { ar: 'جودزيلا: تيربوهات بتصفّر وبلو أوف بيعلن الحرب', en: 'Godzilla: whistling turbos, war-declaring blow-off' } },
-  'audi-r8':   { brightMul: 1.4, sig: { ar: 'أعلى صرخة V10 في التشكيلة', en: 'The highest V10 scream in the collection' } },
-  corvette:    { brightMul: 1.25, detune: 10, sig: { ar: 'فلات بلين بيغني لحد 8,600 لفة', en: 'Flat-plane crank singing to 8,600 rpm' } },
-  supra:       { whistleMul: 2.3, bovMul: 2.5, spool: true, brightMul: 1.1, sig: { ar: 'الأسطورة 2JZ: سبول التيربو… وبعده البلو أوف بيهز الشارع', en: 'The legendary 2JZ: turbo spool… then a street-shaking blow-off' } },
-  challenger:  { scMul: 2.0, subMul: 1.3, sig: { ar: 'واين السوبرتشارجير الشيطاني فوق هدير الهيمي', en: 'Demonic supercharger whine over HEMI thunder' } },
-  taycan:      { sig: { ar: 'همهمة كهربا من المستقبل', en: 'An electric hum from the future' } },
+/* Hand-tuned VOICE per car, derived from its real engine: idle speed,
+   idle lope (the lumpy cam chop of muscle V8s), how fast it revs,
+   exhaust crackle on lift-off, a scream harmonic for V10 / V12 /
+   flat-plane engines, turbo & supercharger whistle and blow-off
+   weight, sub-bass, brightness, starter-crank length — plus the
+   bilingual note shown to visitors. No two cars share a voice. */
+const VOICES = {
+  chiron:      { idle: 900,  lope: 0.03, revMul: 0.90, crackle: 0,    harm: 0,    subMul: 1.5,  whistleMul: 1.15, brightMul: 0.9,  crankMs: 800, sig: { ar: 'هدير W16 بأربعة تيربو — قوة هادية ومرعبة', en: 'W16 quad-turbo rumble — calm, terrifying power' } },
+  laferrari:   { idle: 1000, lope: 0.02, revMul: 1.35, crackle: 0.25, harm: 0.16, brightMul: 1.3, crankMs: 600, sig: { ar: 'أوبرا V12 من مارانيلو', en: 'A V12 opera from Maranello' } },
+  huracan:     { idle: 1050, lope: 0.04, revMul: 1.40, crackle: 0.50, harm: 0.15, brightMul: 1.3, crankMs: 550, sig: { ar: 'صرخة V10 إيطالية لحد آخر نفس', en: 'Italian V10 scream to the last breath' } },
+  'audi-r8':   { idle: 1000, lope: 0.04, revMul: 1.35, crackle: 0.45, harm: 0.17, brightMul: 1.4, crankMs: 550, sig: { ar: 'أعلى صرخة V10 في التشكيلة', en: 'The highest V10 scream in the collection' } },
+  '720s':      { idle: 950,  lope: 0.03, revMul: 1.45, crackle: 0.20, harm: 0.08, whistleMul: 1.2, brightMul: 1.1, crankMs: 550, sig: { ar: 'توين تيربو بريطاني حاد كالموس', en: 'British twin-turbo, sharp as a razor' } },
+  corvette:    { idle: 900,  lope: 0.03, revMul: 1.40, crackle: 0.30, harm: 0.15, brightMul: 1.25, detune: 10, crankMs: 600, sig: { ar: 'فلات بلين بيغني لحد 8,600 لفة', en: 'Flat-plane crank singing to 8,600 rpm' } },
+  'amg-gtr':   { idle: 850,  lope: 0.10, revMul: 1.00, crackle: 0.85, harm: 0,    subMul: 1.3, crankMs: 700, sig: { ar: 'زئير AMG العميق… وفرقعات عادم ما بترحمش', en: 'Deep AMG growl — and exhaust crackle with no mercy' } },
+  'amg-gt':    { idle: 875,  lope: 0.09, revMul: 1.00, crackle: 0.70, harm: 0,    subMul: 1.3, brightMul: 1.05, crankMs: 700, sig: { ar: 'بيتوربو بيتنفس تقيل وبيزأر', en: 'Biturbo breathing heavy, roaring' } },
+  m5:          { idle: 900,  lope: 0.06, revMul: 1.05, crackle: 0.40, harm: 0,    whistleMul: 1.1, subMul: 1.15, crankMs: 650, sig: { ar: 'V8 ألماني منضبط… لحد ما تدوس', en: 'Disciplined German V8 — until you floor it' } },
+  panamera:    { idle: 850,  lope: 0.04, revMul: 0.95, crackle: 0.15, harm: 0,    brightMul: 0.95, subMul: 1.1, crankMs: 650, sig: { ar: 'فخامة هادية بصوت V8 واثق', en: 'Quiet luxury, confident V8 voice' } },
+  mustang:     { idle: 800,  lope: 0.22, revMul: 0.90, crackle: 0.55, harm: 0,    subMul: 1.35, crankMs: 750, sig: { ar: 'لوب الكويوتي الأمريكاني الأصلي على ٨٠٠ لفة', en: 'Original Coyote lope, idling low at 800 rpm' } },
+  camaro:      { idle: 825,  lope: 0.26, revMul: 0.88, crackle: 0.60, harm: 0,    subMul: 1.3, crankMs: 750, sig: { ar: 'LT1 بيلوب وهو واقف وبيفرقع لما ترفع رجلك', en: 'LT1 loping at idle, popping when you lift' } },
+  challenger:  { idle: 775,  lope: 0.30, revMul: 0.80, crackle: 0.50, harm: 0,    scMul: 2.0, subMul: 1.3, crankMs: 800, sig: { ar: 'واين السوبرتشارجير الشيطاني فوق هدير الهيمي', en: 'Demonic supercharger whine over HEMI thunder' } },
+  m440i:       { idle: 900,  lope: 0.03, revMul: 1.10, crackle: 0.25, harm: 0.03, whistleMul: 1.25, crankMs: 600, sig: { ar: 'ستة سلندر B58 بصافرة تيربو ناعمة', en: 'B58 straight-six with a smooth turbo whistle' } },
+  m4:          { idle: 950,  lope: 0.05, revMul: 1.15, crackle: 0.65, harm: 0.05, whistleMul: 1.3, detune: 6, crankMs: 600, sig: { ar: 'S58 توين تيربو شرّاس — بربل وفرقعات على الرفعة', en: 'S58 twin-turbo — angry burbles on lift-off' } },
+  gtr:         { idle: 950,  lope: 0.05, revMul: 1.20, crackle: 0.30, harm: 0.04, whistleMul: 1.6, bovMul: 1.7, crankMs: 600, sig: { ar: 'جودزيلا: تيربوهات بتصفّر وبلو أوف بيعلن الحرب', en: 'Godzilla: whistling turbos, war-declaring blow-off' } },
+  supra:       { idle: 900,  lope: 0.06, revMul: 1.00, crackle: 0.35, harm: 0.03, whistleMul: 2.3, bovMul: 2.5, spool: true, brightMul: 1.1, crankMs: 650, sig: { ar: 'الأسطورة 2JZ: سبول التيربو… وبعده البلو أوف بيهز الشارع', en: 'The legendary 2JZ: turbo spool… then a street-shaking blow-off' } },
+  taycan:      { sig: { ar: 'همهمة كهربا من المستقبل… ونقلة الجيربوكس مسموعة', en: 'An electric hum from the future — hear the two-speed shift' } },
 };
 
 function engineProfile(car) {
   const e = car.engine || '';
+  const v = VOICES[car.id] || {};
   if (car.category === 'electric' || /Dual Motor|· EV/i.test(e)) {
-    return { ev: true, cyl: 0, turbo: false, supercharged: false, bright: 1, lope: 0, sig: (SIGNATURES[car.id] || {}).sig };
+    return { ev: true, cyl: 0, turbo: false, supercharged: false, bright: 1, idle: 0, lopeAmp: 0, revMul: 1, crackle: 0, harm: 0, harmMul: 3, crankMs: 0, sig: v.sig };
   }
   let cyl = 8;
   if (/W16/.test(e)) cyl = 16;
@@ -56,23 +60,21 @@ function engineProfile(car) {
     flatPlane,
     turbo: /Turbo|Biturbo/i.test(e),
     supercharged: /Supercharged/i.test(e),
-    bright: (cyl >= 10 || flatPlane ? 1.55 : cyl === 6 ? 1.15 : 0.9) * ((SIGNATURES[car.id] || {}).brightMul || 1),
-    lope: car.category === 'muscle' ? 1 : 0,
-    ...sigFields(car),
-  };
-}
-
-function sigFields(car) {
-  const g = SIGNATURES[car.id] || {};
-  return {
-    sig: g.sig,
-    brightMul: g.brightMul || 1,
-    whistleMul: g.whistleMul || 1,
-    bovMul: g.bovMul || 1,
-    subMul: g.subMul || 1,
-    scMul: g.scMul || 1,
-    spool: !!g.spool,
-    detune: g.detune || 0,
+    bright: (cyl >= 10 || flatPlane ? 1.55 : cyl === 6 ? 1.15 : 0.9) * (v.brightMul || 1),
+    idle: v.idle || IDLE,
+    lopeAmp: v.lope ?? (car.category === 'muscle' ? 0.18 : 0.03),
+    revMul: v.revMul || 1,
+    crackle: v.crackle || 0,
+    harm: v.harm || 0,
+    harmMul: cyl === 10 ? 2.5 : 3,
+    crankMs: v.crankMs || 650,
+    sig: v.sig,
+    whistleMul: v.whistleMul || 1,
+    bovMul: v.bovMul || 1,
+    subMul: v.subMul || 1,
+    scMul: v.scMul || 1,
+    spool: !!v.spool,
+    detune: v.detune || 0,
   };
 }
 
@@ -118,6 +120,11 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
     osc2.connect(g2); g2.connect(filter);
     sub.connect(gSub); gSub.connect(filter);
 
+    // scream harmonic (V10 / V12 / flat-plane shriek) — silent elsewhere
+    const osc3 = ctx.createOscillator(); osc3.type = 'sawtooth';
+    const g3 = ctx.createGain(); g3.gain.value = 0;
+    osc3.connect(g3); g3.connect(filter);
+
     // exhaust noise (skipped for EV)
     let bp = null;
     let noiseBuf = null;
@@ -143,8 +150,8 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       whistle.start();
     }
 
-    osc1.start(); osc2.start(); sub.start();
-    return { ctx, master, filter, osc1, osc2, sub, bp, whistle, gWhistle, noiseBuf };
+    osc1.start(); osc2.start(); sub.start(); osc3.start();
+    return { ctx, master, filter, osc1, osc2, sub, osc3, g3, bp, whistle, gWhistle, noiseBuf };
   };
 
   const killAudio = () => {
@@ -177,6 +184,34 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
     } catch { /* noop */ }
   };
 
+  /* one exhaust pop — a short, harsh noise snap */
+  const pop = (intensity = 1) => {
+    const a = audioRef.current;
+    if (!a || !a.noiseBuf) return;
+    try {
+      const { ctx } = a;
+      const src = ctx.createBufferSource(); src.buffer = a.noiseBuf;
+      src.playbackRate.value = 0.7 + Math.random() * 0.7;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 0.9;
+      bp.frequency.value = 750 + Math.random() * 1500;
+      const g = ctx.createGain();
+      const t0 = ctx.currentTime;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.02, 0.3 * intensity), t0 + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.07 + Math.random() * 0.05);
+      src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+      src.start(); src.stop(t0 + 0.16);
+    } catch { /* noop */ }
+  };
+
+  /* a ragged burst of pops when you lift off a crackly exhaust */
+  const crackleBurst = () => {
+    const n = 3 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < n; i++) {
+      setTimeout(() => pop(0.45 + Math.random() * 0.55), 40 + i * (55 + Math.random() * 85));
+    }
+  };
+
   /* ---------- simulation loop ---------- */
   useEffect(() => {
     let raf;
@@ -184,14 +219,14 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       const s = simRef.current;
       if (s.phase === 'cranking') {
         s.rpm = 260 + Math.sin(t / 55) * 70 + Math.random() * 30;
-        if (t - s.crankStart > 650) {
+        if (t - s.crankStart > (profile.crankMs || 650)) {
           s.phase = 'on';
           setPhase('on');
         }
       } else if (s.phase === 'on') {
-        const idleTarget = profile.ev ? 0 : IDLE;
+        const idleTarget = profile.ev ? 0 : profile.idle;
         const target = s.revHold ? redline : idleTarget;
-        const rate = s.revHold ? (profile.ev ? 0.09 : 0.055) : 0.035;
+        const rate = s.revHold ? (profile.ev ? 0.09 : 0.055 * (profile.revMul || 1)) : 0.035;
         s.rpm += (target - s.rpm) * rate;
         if (!s.revHold && !profile.ev) s.rpm += Math.sin(t / 90) * 6; // idle wobble
         s.spool = (s.spool ?? 0) + ((s.rpm / redline) - (s.spool ?? 0)) * 0.04; // turbo spool lags the revs
@@ -228,7 +263,8 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
       if (a && s.phase !== 'off') {
         const now = a.ctx.currentTime;
         if (profile.ev) {
-          const f = 55 + ratio * 980;
+          const shift = ratio > 0.55 ? 1.16 : 1; // the Taycan's two-speed box steps the whine up
+          const f = (55 + ratio * 980) * shift;
           a.osc1.frequency.setTargetAtTime(f, now, 0.03);
           a.osc2.frequency.setTargetAtTime(f * 2.02, now, 0.03);
           a.sub.frequency.setTargetAtTime(f / 2, now, 0.03);
@@ -239,6 +275,10 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
           a.osc1.frequency.setTargetAtTime(f, now, 0.03);
           a.osc2.frequency.setTargetAtTime(f * 1.5, now, 0.03);
           a.sub.frequency.setTargetAtTime(f / 2, now, 0.03);
+          if (a.osc3) {
+            a.osc3.frequency.setTargetAtTime(f * (profile.harmMul || 3), now, 0.03);
+            a.g3.gain.setTargetAtTime((profile.harm || 0) * Math.pow(ratio, 1.4), now, 0.06);
+          }
           a.filter.frequency.setTargetAtTime((380 + ratio * 1600) * profile.bright, now, 0.05);
           if (a.bp) a.bp.frequency.setTargetAtTime(250 + ratio * 900, now, 0.05);
           let vol = s.phase === 'cranking' ? 0.1 : 0.14 + ratio * 0.1;
@@ -246,8 +286,11 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
             vol *= 0.35 + ratio * 0.75;
             if (s.rpm < 900) vol *= 1 - 0.45 * Math.max(0, Math.sin(t / 110)) * Math.max(0.3, 1 - ratio * 3); // cough dips
           }
-          if (profile.lope && s.phase === 'on') {
-            vol *= 1 + 0.13 * Math.sin((t / 1000) * (s.rpm / 60) * Math.PI) * (1 - ratio);
+          if (profile.lopeAmp && s.phase === 'on') {
+            vol *= 1 + profile.lopeAmp * Math.sin((t / 1000) * (s.rpm / 60) * Math.PI) * Math.max(0, 1 - ratio * 2.2);
+          }
+          if (profile.crackle && s.revHold && ratio > 0.72 && Math.random() < profile.crackle * 0.012) {
+            pop(0.4 + Math.random() * 0.5); // overrun pops while you hold it high
           }
           a.master.gain.setTargetAtTime(vol, now, 0.06);
           if (a.whistle) {
@@ -325,7 +368,10 @@ export default function EngineStarter({ car, compact = false, onStateChange }) {
 
   const hold = (v) => {
     if (simRef.current.phase !== 'on') return;
-    if (!v && simRef.current.revHold && profile.turbo) blowOff();
+    if (!v && simRef.current.revHold) {
+      if (profile.turbo) blowOff();
+      if (profile.crackle && simRef.current.rpm > 3600) crackleBurst();
+    }
     simRef.current.revHold = v;
     setRevving(v);
     if (v && navigator.vibrate) navigator.vibrate(15);
