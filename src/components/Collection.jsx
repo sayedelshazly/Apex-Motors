@@ -29,7 +29,7 @@ function CarModal({ car, onClose }) {
           <X size={18} />
         </button>
         <div className="relative aspect-[16/9] overflow-hidden">
-          <img src={car.img} alt={car.model} className="car-idle h-full w-full object-cover" />
+          <img src={car.img} alt={car.model} className="car-idle h-full w-full bg-void object-contain md:object-cover" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-carbon to-transparent" />
           {carTag(car, lang) && <span className="absolute right-4 top-4 bg-signal px-3 py-1.5 text-xs font-black text-white">{carTag(car, lang)}</span>}
           {car.id === 'supra' && <span className="absolute bottom-4 right-4 bg-amber-400 px-3 py-1.5 text-xs font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)]">{t('coll.legend')}</span>}
@@ -100,7 +100,7 @@ export default function Collection() {
       </Reveal>
 
       {/* grid */}
-      <motion.div layout className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-5">
+      <motion.div layout className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5">
         <AnimatePresence mode="popLayout">
           {list.map((car) => (
             <motion.article
@@ -110,7 +110,7 @@ export default function Collection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className={`group relative overflow-hidden bg-carbon ${car.id === 'supra' ? 'ring-2 ring-amber-400/80' : ''}`}
+              className={`group relative overflow-hidden border border-line bg-carbon lg:border-transparent ${car.id === 'supra' ? 'ring-2 ring-amber-400/80' : ''}`}
               data-cursor={t('coll.view')}
               onClick={() => setSelected(car)}
             >
@@ -119,27 +119,31 @@ export default function Collection() {
                   src={car.img}
                   alt={`${car.brand} ${car.model}`}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                  className="h-full w-full bg-black object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-110 lg:object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-carbon via-transparent to-transparent" />
-                {carTag(car, lang) && <span className="absolute right-1.5 top-1.5 bg-signal px-1.5 py-0.5 text-[8px] font-black text-white md:right-3 md:top-3 md:px-2.5 md:py-1 md:text-[11px]">{carTag(car, lang)}</span>}
-                {car.id === 'supra' && <span className="absolute bottom-1.5 right-1.5 bg-amber-400 px-1.5 py-0.5 text-[8px] font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)] md:bottom-3 md:right-3 md:px-2.5 md:py-1 md:text-[11px]">{t('coll.legend')}</span>}
-                <span className="absolute left-3 top-3 hidden h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:flex">
+                {carTag(car, lang) && <span className="absolute right-3 top-3 bg-signal px-2.5 py-1 text-[10px] font-black text-white lg:text-[11px]">{carTag(car, lang)}</span>}
+                {car.id === 'supra' && <span className="absolute bottom-3 right-3 bg-amber-400 px-2.5 py-1 text-[10px] font-black text-black shadow-[0_0_18px_rgba(251,191,36,0.55)] lg:text-[11px]">{t('coll.legend')}</span>}
+                <span className="absolute left-3 top-3 font-grotesk text-xs tracking-[0.2em] text-bone/60 lg:hidden" dir="ltr">{String(cars.indexOf(car) + 1).padStart(2, '0')} / {cars.length}</span>
+                <span className="absolute bottom-3 left-3 flex h-8 w-8 items-center justify-center rounded-full border border-bone/25 text-bone backdrop-blur-sm lg:hidden">
+                  <ArrowUpLeft size={15} />
+                </span>
+                <span className="absolute left-3 top-3 hidden h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-bone text-void opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex">
                   <ArrowUpLeft size={17} />
                 </span>
               </div>
-              <div className="p-2.5 md:p-5">
+              <div className="p-4 sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="font-grotesk text-[8px] uppercase tracking-[0.18em] text-signal md:text-[10px] md:tracking-[0.3em]" dir="ltr">{car.brand}</p>
-                    <h3 className="mt-1 text-[12px] font-black leading-snug text-bone md:mt-1.5 md:text-xl">{lang === 'ar' ? car.modelAr : car.model}</h3>
+                    <p className="font-grotesk text-[10px] uppercase tracking-[0.3em] text-signal" dir="ltr">{car.brand}</p>
+                    <h3 className="mt-1.5 text-lg font-black leading-snug text-bone lg:text-xl">{lang === 'ar' ? car.modelAr : car.model}</h3>
                   </div>
-                  <span className="hidden border border-line px-2 py-1 font-grotesk text-xs text-dim md:block" dir="ltr">{car.year}</span>
+                  <span className="border border-line px-2 py-1 font-grotesk text-[11px] text-dim lg:text-xs" dir="ltr">{car.year}</span>
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-2 text-[10px] text-dim md:mt-4 md:gap-5 md:pt-4 md:text-sm" dir="ltr">
-                  <span className="flex items-center gap-1 md:gap-1.5"><Gauge size={15} className="h-3 w-3 text-signal md:h-[15px] md:w-[15px]" />{car.hp} HP</span>
-                  <span className="flex items-center gap-1 md:gap-1.5"><Timer size={15} className="h-3 w-3 text-signal md:h-[15px] md:w-[15px]" />{car.accel.toFixed(1)}s</span>
-                  <span className="font-display text-[11px] text-bone max-md:w-full md:mr-auto md:text-lg">{car.price} <span className="text-[8px] text-signal md:text-[11px]">EGP</span></span>
+                <div className="mt-3 flex flex-wrap items-center gap-4 border-t border-line pt-3 text-xs text-dim lg:mt-4 lg:pt-4 lg:text-sm" dir="ltr">
+                  <span className="flex items-center gap-1 md:gap-1.5"><Gauge size={15} className="h-3.5 w-3.5 text-signal lg:h-[15px] lg:w-[15px]" />{car.hp} HP</span>
+                  <span className="flex items-center gap-1 md:gap-1.5"><Timer size={15} className="h-3.5 w-3.5 text-signal lg:h-[15px] lg:w-[15px]" />{car.accel.toFixed(1)}s</span>
+                  <span className="ml-auto font-display text-base text-bone lg:text-lg">{car.price} <span className="text-[10px] text-signal lg:text-[11px]">EGP</span></span>
                 </div>
               </div>
               <span className="absolute inset-x-0 bottom-0 h-[3px] origin-right scale-x-0 bg-signal transition-transform duration-500 group-hover:scale-x-100" />

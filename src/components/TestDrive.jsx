@@ -75,7 +75,7 @@ export default function TestDrive() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="car-idle absolute inset-0 h-full w-full object-cover"
+                className="car-idle absolute inset-0 h-full w-full object-contain"
               />
             </AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-transparent to-transparent" />

@@ -58,7 +58,7 @@ export default function HorizontalGallery() {
         {slides.map((s, i) => (
           <article key={s.en} className="group relative w-[78vw] shrink-0 overflow-hidden sm:w-[52vw] lg:w-[38vw]" data-cursor={s.en}>
             <div className="relative aspect-[4/3] overflow-hidden">
-              <img src={s.img} alt={s.en} loading="lazy" className="car-idle h-full w-full object-cover transition-transform duration-[1400ms] group-hover:scale-108" />
+              <img src={s.img} alt={s.en} loading="lazy" className="car-idle h-full w-full object-contain transition-transform duration-[1400ms] group-hover:scale-108 lg:object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent" />
               <span className="text-stroke absolute right-4 top-2 font-display text-6xl md:text-7xl" dir="ltr">0{i + 1}</span>
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">

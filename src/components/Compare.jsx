@@ -77,7 +77,7 @@ function FighterPhoto({ car, flip = false }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="car-idle absolute inset-0 h-full w-full object-cover"
+          className="car-idle absolute inset-0 h-full w-full object-contain lg:object-cover"
           style={flip ? { scaleX: -1 } : undefined}
         />
       </AnimatePresence>
