@@ -51,19 +51,19 @@ export default function Hero({ started }) {
       {/* car backdrop — slow cinematic dolly-in + scroll parallax */}
       <motion.div style={{ y: imgY }} className="absolute inset-0">
         <motion.img
-          src="/cars/bugatti.webp"
+          src="/cars/hero-black.webp"
           alt="Bugatti Chiron"
           initial={{ scale: 1.18 }}
           animate={started ? { scale: 1.02 } : {}}
           transition={{ duration: 7, ease: [0.22, 1, 0.36, 1] }}
-          className="car-idle h-[115%] w-full object-cover object-center"
+          className="car-idle h-[115%] w-full object-cover object-center max-sm:object-[72%_50%]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-void/80 via-void/25 to-void" />
         <div className="absolute inset-0 bg-gradient-to-l from-void/70 via-transparent to-void/40" />
       </motion.div>
 
       {/* floating spec cards — زي مرجع إنستجرام */}
-      <SpecCard className="right-[6%] top-[30%] hidden md:block" icon={Gauge} value="1600" unit="HP" label="Horsepower" delay={1.1} />
+      <SpecCard className="right-[6%] top-[22%] hidden md:block" icon={Gauge} value="1600" unit="HP" label="Horsepower" delay={1.1} />
       <SpecCard className="left-[5%] top-[52%] hidden md:block" icon={Timer} value="2.4" unit="SEC" label="0—100 KM/H" delay={1.3} />
       <SpecCard className="bottom-[24%] right-[10%] hidden lg:block" icon={Wind} value="440" unit="KM/H" label="Top Speed" delay={1.5} />
 
