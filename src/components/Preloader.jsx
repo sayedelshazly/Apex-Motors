@@ -16,14 +16,14 @@ export default function Preloader({ onDone }) {
   useEffect(() => {
     let v = 0;
     const id = setInterval(() => {
-      v += Math.floor(Math.random() * 10) + 5;
+      v += Math.floor(Math.random() * 10) + 9;
       if (v >= 100) {
         v = 100;
         clearInterval(id);
-        setTimeout(onDone, 380);
+        setTimeout(onDone, 100);
       }
       setCount(v);
-    }, 78);
+    }, 40);
     return () => clearInterval(id);
   }, [onDone]);
 
@@ -39,7 +39,7 @@ export default function Preloader({ onDone }) {
     <motion.div
       className="noise fixed inset-0 z-[300] flex flex-col justify-between overflow-hidden bg-[#08080a] px-6 py-7 md:px-12"
       exit={{ y: '-100%' }}
-      transition={{ duration: 0.9, ease: [0.83, 0, 0.17, 1] }}
+      transition={{ duration: 0.55, ease: [0.83, 0, 0.17, 1] }}
     >
       <div className="flex items-center justify-between font-grotesk text-[11px] uppercase tracking-[0.35em] text-[#9b978c]">
         <Logo className="h-8 w-8 shrink-0 text-[#f2f0ea]" />

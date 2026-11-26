@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Preloader from './components/Preloader';
 import Cursor from './components/Cursor';
@@ -10,20 +8,18 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import Spotlight from './components/Spotlight';
-import Collection from './components/Collection';
-import Compare from './components/Compare';
-import Hybrid from './components/Hybrid';
-import HorizontalGallery from './components/HorizontalGallery';
-import About from './components/About';
-import TestDrive from './components/TestDrive';
+const Collection = lazy(() => import('./components/Collection'));
+const Compare = lazy(() => import('./components/Compare'));
+const Hybrid = lazy(() => import('./components/Hybrid'));
+const HorizontalGallery = lazy(() => import('./components/HorizontalGallery'));
+const About = lazy(() => import('./components/About'));
+const TestDrive = lazy(() => import('./components/TestDrive'));
 import Footer from './components/Footer';
 import ScrollSpeedo from './components/ScrollSpeedo';
 import SportScrollFx from './components/SportScrollFx';
 import BackToTop from './components/BackToTop';
 import { playRev } from './lib/revSound';
 import { playClick } from './lib/clickSound';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /** Red sweep that fires the moment SPORT mode engages */
 function SportFlash() {
@@ -78,14 +74,14 @@ export default function App() {
     return () => document.removeEventListener('pointerdown', onDown);
   }, [mode]);
 
-  // Lenis smooth scroll driven by GSAP's ticker (keeps ScrollTrigger in sync)
+  // Lenis smooth scroll on its own rAF loop (GSAP lives in the lazy
+  // gallery chunk, which wires its ScrollTrigger to lenis itself)
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.35, smoothWheel: true, easing: (t) => 1 - Math.pow(1 - t, 4) });
     window.__lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-    const tick = (time) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    let raf;
+    const loop = (time) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
+    raf = requestAnimationFrame(loop);
 
     // anchor links through Lenis
     const onClick = (e) => {
@@ -100,7 +96,7 @@ export default function App() {
     document.addEventListener('click', onClick);
     return () => {
       document.removeEventListener('click', onClick);
-      gsap.ticker.remove(tick);
+      cancelAnimationFrame(raf);
       delete window.__lenis;
       lenis.destroy();
     };
@@ -130,13 +126,21 @@ export default function App() {
         <Hero started={!loading} />
         <Marquee />
         <Spotlight />
-        <HorizontalGallery />
-        <Collection />
-        <Compare />
-        <Hybrid />
+        {!loading && (
+          <Suspense fallback={<div className="min-h-[60vh]" aria-hidden />}>
+            <HorizontalGallery />
+            <Collection />
+            <Compare />
+            <Hybrid />
+          </Suspense>
+        )}
         <Marquee dark />
-        <About />
-        <TestDrive />
+        {!loading && (
+          <Suspense fallback={<div className="min-h-[40vh]" aria-hidden />}>
+            <About />
+            <TestDrive />
+          </Suspense>
+        )}
       </main>
 
       <Footer />

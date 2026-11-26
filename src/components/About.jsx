@@ -33,7 +33,7 @@ export default function About() {
             src="/cars/ferrari.webp"
             alt={t('about.imgAlt')}
             style={{ y, scale: 1.18 }}
-            className="h-full w-full object-cover"
+            loading="lazy" decoding="async" className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-void/60 to-transparent" />
           <div className="absolute bottom-5 right-5 border border-line bg-void/60 px-5 py-4 backdrop-blur-md">

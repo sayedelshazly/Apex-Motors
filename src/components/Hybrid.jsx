@@ -35,7 +35,7 @@ function DonorPicker({ label, icon: Icon, car, onPick, lang, t }) {
         className="flex w-full items-center gap-3 border border-line bg-carbon px-3 py-2.5 text-start transition-colors hover:border-signal"
         data-cursor={t('cmp.change')}
       >
-        <img src={car.img} alt="" className="h-10 w-16 shrink-0 object-cover" />
+        <img src={car.img} alt="" loading="lazy" decoding="async" className="h-10 w-16 shrink-0 object-cover" />
         <span className="min-w-0 flex-1 truncate text-sm font-black text-bone">{carName(car, lang)}</span>
         <span className="font-grotesk text-signal">{open ? '—' : '+'}</span>
       </button>
@@ -54,7 +54,7 @@ function DonorPicker({ label, icon: Icon, car, onPick, lang, t }) {
                   onClick={() => { onPick(c); setOpen(false); }}
                   className={`flex w-full items-center gap-3 px-3 py-2 text-start transition-colors hover:bg-white/5 ${c.id === car.id ? 'bg-signal/15' : ''}`}
                 >
-                  <img src={c.img} alt="" className="h-8 w-12 shrink-0 object-cover" />
+                  <img src={c.img} alt="" loading="lazy" decoding="async" className="h-8 w-12 shrink-0 object-cover" />
                   <span className="min-w-0 flex-1 truncate text-[13px] font-bold text-bone">{carName(c, lang)}</span>
                   <span className="font-grotesk text-[10px] uppercase tracking-wider text-dim">{c.hp} HP</span>
                 </button>
@@ -124,7 +124,7 @@ export default function Hybrid() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0.3 }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="car-idle h-72 w-full object-contain md:h-[430px] lg:object-cover"
+                loading="lazy" decoding="async" className="car-idle h-72 w-full object-contain md:h-[430px] lg:object-cover"
                 style={{ filter: `saturate(1.2) hue-rotate(${ENGINE_HUE[engine.category] ?? 0}deg)` }}
               />
             </AnimatePresence>

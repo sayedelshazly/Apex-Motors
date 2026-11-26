@@ -38,7 +38,10 @@ export default function HorizontalGallery() {
         },
       });
     }, wrapRef);
-    return () => ctx.revert();
+    const lenis = window.__lenis;
+    const onScroll = () => ScrollTrigger.update();
+    if (lenis) lenis.on('scroll', onScroll);
+    return () => { if (lenis) lenis.off('scroll', onScroll); ctx.revert(); };
   }, [lang]);
 
   return (

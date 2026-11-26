@@ -25,7 +25,7 @@ function CarPicker({ car, other, onPick, align = 'start' }) {
         className="flex w-full items-center gap-3 border border-white/15 bg-white/[0.03] px-3 py-2.5 text-start transition-colors hover:border-signal/60"
         data-cursor={t('cmp.change')}
       >
-        <img src={car.img} alt={car.model} className="h-11 w-16 shrink-0 object-cover" />
+        <img src={car.img} alt={car.model} loading="lazy" decoding="async" className="h-11 w-16 shrink-0 object-cover" />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-bold text-bone">{carName(car, lang)}</span>
           <span className="block font-grotesk text-[10px] uppercase tracking-[0.18em] text-bone/45" dir="ltr">{car.brand} · {car.year}</span>
@@ -47,7 +47,7 @@ function CarPicker({ car, other, onPick, align = 'start' }) {
                 onClick={() => { onPick(c.id); setOpen(false); }}
                 className={`flex w-full items-center gap-3 px-3 py-2 text-start transition-colors hover:bg-signal/15 ${c.id === car.id ? 'bg-signal/10' : ''}`}
               >
-                <img src={c.img} alt={c.model} className="h-9 w-14 shrink-0 object-cover" loading="lazy" />
+                <img src={c.img} alt={c.model} loading="lazy" decoding="async" className="h-9 w-14 shrink-0 object-cover" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[13px] font-bold text-bone">
                     {carName(c, lang)}
@@ -77,7 +77,7 @@ function FighterPhoto({ car, flip = false }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="car-idle absolute inset-0 h-full w-full object-contain lg:object-cover"
+          loading="lazy" decoding="async" className="car-idle absolute inset-0 h-full w-full object-contain lg:object-cover"
           style={flip ? { scaleX: -1 } : undefined}
         />
       </AnimatePresence>
